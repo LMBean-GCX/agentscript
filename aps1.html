@@ -8,15 +8,12 @@
 <style>
   :root {
     --primary: #003a8f;
-    --primary-light: #e8f1fb;
     --bg: #f4f6f8;
     --card-bg: #ffffff;
     --text-main: #1f2d3d;
     --text-muted: #5f6c7b;
     --radius: 14px;
     --shadow: 0 4px 14px rgba(0,0,0,0.08);
-    --danger: #e26c6c;
-    --danger-light: #f9e5e5;
   }
 
   body {
@@ -55,15 +52,12 @@
     font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
+    background: var(--primary);
+    color: #fff;
   }
 
-  .btn-primary { background: var(--primary); color: #fff; }
-  .btn-primary:hover { background: #002e6f; }
-
-  /* -------------------- TABS --------------------- */
   .tabs {
     display: flex;
-    flex-wrap: wrap;
     gap: 6px;
     border-bottom: 2px solid #d7e0ea;
     margin-bottom: 20px;
@@ -86,13 +80,13 @@
   .card {
     background: var(--card-bg);
     padding: 22px;
-    margin-bottom: 20px;
     border-radius: var(--radius);
     box-shadow: var(--shadow);
   }
 
   h3 {
     margin-top: 0;
+    margin-bottom: 20px;
     color: var(--primary);
   }
 
@@ -111,17 +105,26 @@
     border-radius: var(--radius);
   }
 
-  /* ✅ CENTERED GRID + VERTICAL SPACING */
+  /* ✅ FULL-WIDTH GRID WITH PROPER ROW SPACING */
   .grid-2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 32px 24px; /* row gap, column gap */
-    max-width: 900px;
-    margin: 0 auto 24px auto;
+    column-gap: 24px;
+    row-gap: 28px; /* THIS fixes vertical spacing */
+    margin-bottom: 28px;
+  }
+
+  /* field wrapper for consistency */
+  .field {
+    display: flex;
+    flex-direction: column;
   }
 
   @media (max-width: 700px) {
-    .grid-2 { grid-template-columns: 1fr; }
+    .grid-2 {
+      grid-template-columns: 1fr;
+      row-gap: 22px;
+    }
   }
 
   .check-item {
@@ -148,14 +151,10 @@
 
   <div class="header">Arizona Public Service</div>
 
-  <!-- REPORT OUTAGE BUTTON -->
   <div class="outage-bar">
-    <button class="btn btn-primary" type="button">
-      Report an Outage
-    </button>
+    <button class="btn" type="button">Report an Outage</button>
   </div>
 
-  <!-- ---------------- TABS ---------------- -->
   <div class="tabs">
     <div class="tab active" data-tab="context">Customer Context</div>
     <div class="tab" data-tab="workflow">Workflow</div>
@@ -164,23 +163,23 @@
     <div class="tab" data-tab="pa">Account Viewer</div>
   </div>
 
-  <!-- ---------------- TAB: CONTEXT ---------------- -->
+  <!-- CONTEXT -->
   <div id="context" class="tab-content active">
     <div class="card">
       <h3>Customer Context</h3>
 
       <div class="grid-2">
-        <div><label>First Name</label><input></div>
-        <div><label>Last Name</label><input></div>
+        <div class="field"><label>First Name</label><input></div>
+        <div class="field"><label>Last Name</label><input></div>
 
-        <div><label>Phone Number</label><input></div>
-        <div><label>Account Number</label><input></div>
+        <div class="field"><label>Phone Number</label><input></div>
+        <div class="field"><label>Account Number</label><input></div>
 
-        <div><label>Service Address</label><input></div>
-        <div><label>Start of Service Date</label><input></div>
+        <div class="field"><label>Service Address</label><input></div>
+        <div class="field"><label>Start of Service Date</label><input></div>
 
-        <div><label>Account Balance</label><input></div>
-        <div><label>Plan Rate Details</label><input></div>
+        <div class="field"><label>Account Balance</label><input></div>
+        <div class="field"><label>Plan Rate Details</label><input></div>
       </div>
 
       <div class="check-item">
@@ -192,43 +191,16 @@
     </div>
   </div>
 
-  <!-- ---------------- TAB: WORKFLOW ---------------- -->
+  <!-- WORKFLOW -->
   <div id="workflow" class="tab-content">
     <div class="card">
       <h3>Outage & Service Workflow</h3>
-
       <div class="check-item"><input type="checkbox">Verify identity</div>
       <div class="check-item"><input type="checkbox">Confirm service address</div>
       <div class="check-item"><input type="checkbox">Check known outage map</div>
       <div class="check-item"><input type="checkbox">Create outage report if needed</div>
       <div class="check-item"><input type="checkbox">Provide ETA if available</div>
       <div class="check-item"><input type="checkbox">Document interaction</div>
-    </div>
-  </div>
-
-  <!-- ---------------- TAB: CONTACT PREFS ---------------- -->
-  <div id="preferences" class="tab-content">
-    <div class="card">
-      <h3>Contact Preferences</h3>
-      <div class="check-item"><input type="checkbox">SMS</div>
-      <div class="check-item"><input type="checkbox">Email</div>
-      <div class="check-item"><input type="checkbox" checked>Voice</div>
-    </div>
-  </div>
-
-  <!-- ---------------- TAB: JOURNEY ---------------- -->
-  <div id="journey" class="tab-content">
-    <div class="card">
-      <h3>Customer Journey</h3>
-      <p>Recent interactions will appear here.</p>
-    </div>
-  </div>
-
-  <!-- ---------------- TAB: ACCOUNT ---------------- -->
-  <div id="pa" class="tab-content">
-    <div class="card">
-      <h3>Account Viewer</h3>
-      <p>Read-only account and service data.</p>
     </div>
   </div>
 
