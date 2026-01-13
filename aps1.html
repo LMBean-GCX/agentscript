@@ -8,6 +8,7 @@
 <style>
   :root {
     --primary: #003a8f;
+    --primary-light: #e8f1fb;
     --bg: #f4f6f8;
     --card-bg: #ffffff;
     --text-main: #1f2d3d;
@@ -20,14 +21,10 @@
     margin: 0;
     background: var(--bg);
     font-family: "Segoe UI", sans-serif;
-    color: var(--text-main);
     padding: 20px 16px;
   }
 
-  .container {
-    max-width: 1100px;
-    margin: auto;
-  }
+  .container { max-width: 1100px; margin: auto; }
 
   .header {
     background: var(--primary);
@@ -36,14 +33,11 @@
     border-radius: var(--radius);
     font-size: 1.25rem;
     font-weight: 600;
-    margin-bottom: 12px;
     text-align: center;
+    margin-bottom: 12px;
   }
 
-  .outage-bar {
-    text-align: center;
-    margin-bottom: 22px;
-  }
+  .outage-bar { text-align: center; margin-bottom: 22px; }
 
   .btn {
     padding: 14px 20px;
@@ -52,9 +46,9 @@
     font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
-    background: var(--primary);
-    color: #fff;
   }
+
+  .btn-primary { background: var(--primary); color: #fff; }
 
   .tabs {
     display: flex;
@@ -66,7 +60,6 @@
   .tab {
     padding: 10px 14px;
     cursor: pointer;
-    font-size: 0.92rem;
     font-weight: 600;
     color: var(--text-muted);
     border-bottom: 3px solid transparent;
@@ -82,20 +75,17 @@
     padding: 22px;
     border-radius: var(--radius);
     box-shadow: var(--shadow);
+    margin-bottom: 20px;
   }
 
-  h3 {
-    margin-top: 0;
-    margin-bottom: 20px;
-    color: var(--primary);
-  }
+  h3 { margin-top: 0; color: var(--primary); }
 
   label {
-    display: block;
     font-size: 0.82rem;
-    margin-bottom: 6px;
     font-weight: 600;
     color: var(--text-muted);
+    display: block;
+    margin-bottom: 6px;
   }
 
   input {
@@ -103,41 +93,20 @@
     padding: 12px;
     border: 1px solid #cbd7e3;
     border-radius: var(--radius);
+    margin-bottom: 16px;
   }
 
-  /* ✅ FULL-WIDTH GRID WITH PROPER ROW SPACING */
   .grid-2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    column-gap: 24px;
-    row-gap: 28px; /* THIS fixes vertical spacing */
-    margin-bottom: 28px;
-  }
-
-  /* field wrapper for consistency */
-  .field {
-    display: flex;
-    flex-direction: column;
-  }
-
-  @media (max-width: 700px) {
-    .grid-2 {
-      grid-template-columns: 1fr;
-      row-gap: 22px;
-    }
+    gap: 24px;
   }
 
   .check-item {
     display: flex;
-    align-items: center;
     gap: 10px;
-    margin-bottom: 18px;
-  }
-
-  .check-item input {
-    width: 18px;
-    height: 18px;
-    margin: 0;
+    align-items: center;
+    margin-bottom: 14px;
   }
 
   .tab-content { display: none; }
@@ -152,61 +121,61 @@
   <div class="header">Arizona Public Service</div>
 
   <div class="outage-bar">
-    <button class="btn" type="button">Report an Outage</button>
+    <button class="btn btn-primary" type="button">
+      Report an Outage
+    </button>
   </div>
 
   <div class="tabs">
     <div class="tab active" data-tab="context">Customer Context</div>
     <div class="tab" data-tab="workflow">Workflow</div>
-    <div class="tab" data-tab="preferences">Contact Preferences</div>
-    <div class="tab" data-tab="journey">Customer Journey</div>
-    <div class="tab" data-tab="pa">Account Viewer</div>
   </div>
 
-  <!-- CONTEXT -->
+  <!-- -------- CUSTOMER CONTEXT -------- -->
   <div id="context" class="tab-content active">
     <div class="card">
       <h3>Customer Context</h3>
 
       <div class="grid-2">
-        <div class="field"><label>First Name</label><input></div>
-        <div class="field"><label>Last Name</label><input></div>
+        <div><label>First Name</label><input id="firstName"></div>
+        <div><label>Last Name</label><input id="lastName"></div>
 
-        <div class="field"><label>Phone Number</label><input></div>
-        <div class="field"><label>Account Number</label><input></div>
+        <div><label>Phone Number</label><input id="phoneNumber"></div>
+        <div><label>Account Number</label><input id="accountNumber"></div>
 
-        <div class="field"><label>Service Address</label><input></div>
-        <div class="field"><label>Start of Service Date</label><input></div>
+        <div><label>Service Address</label><input id="address"></div>
+        <div><label>Start of Service Date</label><input id="startServiceDate"></div>
 
-        <div class="field"><label>Account Balance</label><input></div>
-        <div class="field"><label>Plan Rate Details</label><input></div>
+        <div><label>Account Balance</label><input id="accountBalance"></div>
+        <div><label>Plan Rate Details</label><input id="planRate"></div>
       </div>
 
       <div class="check-item">
-        <input type="checkbox">Identity Verified
+        <input type="checkbox" id="identityVerified">
+        <label for="identityVerified">Identity Verified</label>
       </div>
 
       <label>Caller Intent</label>
-      <input>
+      <input id="callerIntent">
     </div>
   </div>
 
-  <!-- WORKFLOW -->
+  <!-- -------- WORKFLOW -------- -->
   <div id="workflow" class="tab-content">
     <div class="card">
       <h3>Outage & Service Workflow</h3>
       <div class="check-item"><input type="checkbox">Verify identity</div>
       <div class="check-item"><input type="checkbox">Confirm service address</div>
-      <div class="check-item"><input type="checkbox">Check known outage map</div>
-      <div class="check-item"><input type="checkbox">Create outage report if needed</div>
-      <div class="check-item"><input type="checkbox">Provide ETA if available</div>
-      <div class="check-item"><input type="checkbox">Document interaction</div>
+      <div class="check-item"><input type="checkbox">Check outage map</div>
+      <div class="check-item"><input type="checkbox">Submit outage report</div>
     </div>
   </div>
 
 </div>
 
+<!-- ---------------- FIELD MAPPING SCRIPT ---------------- -->
 <script>
+  /* ----- Tabs ----- */
   const tabs = document.querySelectorAll(".tab");
   const contents = document.querySelectorAll(".tab-content");
 
@@ -218,6 +187,43 @@
       document.getElementById(tab.dataset.tab).classList.add("active");
     });
   });
+
+  /* ----- Query Params ----- */
+  const qp = new URLSearchParams(window.location.search);
+
+  function getQP(...keys) {
+    for (let k of keys) {
+      const v = qp.get(k);
+      if (v && v.trim() !== "") return v;
+    }
+    return "";
+  }
+
+  function cleanPhone(v="") {
+    return v.replace(/[^\d]/g,"");
+  }
+
+  function setField(id, val) {
+    const el = document.getElementById(id);
+    if (el && val) el.value = val;
+  }
+
+  /* ----- APS FIELD MAPPING ----- */
+  setField("firstName", getQP("FirstName","first_name","fname","FNAME"));
+  setField("lastName", getQP("LastName","last_name","lname","LNAME"));
+  setField("phoneNumber", cleanPhone(getQP("ANI","Phone","phone","ContactNumber")));
+  setField("accountNumber", getQP("AccountNumber","acct","ACCOUNT"));
+  setField("address", getQP("Address","ServiceAddress","service_address"));
+  setField("startServiceDate", getQP("StartDate","ServiceStartDate"));
+  setField("accountBalance", getQP("Balance","AccountBalance"));
+  setField("planRate", getQP("RatePlan","PlanRate"));
+  setField("callerIntent", getQP("Intent","CallerIntent"));
+
+  /* ----- Identity Flag ----- */
+  const verified = getQP("IdentityVerified","verified");
+  if (verified === "true" || verified === "1") {
+    document.getElementById("identityVerified").checked = true;
+  }
 </script>
 
 </body>
