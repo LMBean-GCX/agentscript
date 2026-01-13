@@ -39,13 +39,13 @@
     border-radius: var(--radius);
     font-size: 1.25rem;
     font-weight: 600;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
     text-align: center;
   }
 
   .outage-bar {
-    margin-bottom: 22px;
     text-align: center;
+    margin-bottom: 22px;
   }
 
   .btn {
@@ -57,16 +57,86 @@
     cursor: pointer;
   }
 
-  .btn-primary {
-    background: var(--primary);
-    color: #fff;
+  .btn-primary { background: var(--primary); color: #fff; }
+  .btn-primary:hover { background: #002e6f; }
+
+  /* -------------------- TABS --------------------- */
+  .tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    border-bottom: 2px solid #d7e0ea;
+    margin-bottom: 20px;
   }
 
-  .btn-primary:hover {
-    background: #002e6f;
+  .tab {
+    padding: 10px 14px;
+    cursor: pointer;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    border-bottom: 3px solid transparent;
   }
 
-  /* --- everything else remains unchanged --- */
+  .tab.active {
+    color: var(--primary);
+    border-bottom: 3px solid var(--primary);
+  }
+
+  .card {
+    background: var(--card-bg);
+    padding: 22px;
+    margin-bottom: 20px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  h3 {
+    margin-top: 0;
+    color: var(--primary);
+  }
+
+  label {
+    display: block;
+    font-size: 0.82rem;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+
+  input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd7e3;
+    border-radius: var(--radius);
+    margin-bottom: 16px;
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  @media (max-width: 700px) {
+    .grid-2 { grid-template-columns: 1fr; }
+  }
+
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .check-item input {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+  }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
 </style>
 </head>
 
@@ -83,10 +153,98 @@
     </button>
   </div>
 
-  <!-- EXISTING TABS, CARDS, WORKFLOW, SCRIPT CONTINUE UNCHANGED -->
-  <!-- (All remaining content from your provided guide stays exactly the same) -->
+  <!-- ---------------- TABS ---------------- -->
+  <div class="tabs">
+    <div class="tab active" data-tab="context">Customer Context</div>
+    <div class="tab" data-tab="workflow">Workflow</div>
+    <div class="tab" data-tab="preferences">Contact Preferences</div>
+    <div class="tab" data-tab="journey">Customer Journey</div>
+    <div class="tab" data-tab="pa">Account Viewer</div>
+  </div>
+
+  <!-- ---------------- TAB: CONTEXT ---------------- -->
+  <div id="context" class="tab-content active">
+    <div class="card">
+      <h3>Customer Context</h3>
+
+      <div class="grid-2">
+        <div><label>First Name</label><input></div>
+        <div><label>Last Name</label><input></div>
+
+        <div><label>Phone Number</label><input></div>
+        <div><label>Account Number</label><input></div>
+
+        <div><label>Service Address</label><input></div>
+        <div><label>Start of Service Date</label><input></div>
+
+        <div><label>Account Balance</label><input></div>
+        <div><label>Plan Rate Details</label><input></div>
+      </div>
+
+      <div class="check-item">
+        <input type="checkbox">Identity Verified
+      </div>
+
+      <label>Caller Intent</label>
+      <input>
+    </div>
+  </div>
+
+  <!-- ---------------- TAB: WORKFLOW ---------------- -->
+  <div id="workflow" class="tab-content">
+    <div class="card">
+      <h3>Outage & Service Workflow</h3>
+
+      <div class="check-item"><input type="checkbox">Verify identity</div>
+      <div class="check-item"><input type="checkbox">Confirm service address</div>
+      <div class="check-item"><input type="checkbox">Check known outage map</div>
+      <div class="check-item"><input type="checkbox">Create outage report if needed</div>
+      <div class="check-item"><input type="checkbox">Provide ETA if available</div>
+      <div class="check-item"><input type="checkbox">Document interaction</div>
+    </div>
+  </div>
+
+  <!-- ---------------- TAB: CONTACT PREFS ---------------- -->
+  <div id="preferences" class="tab-content">
+    <div class="card">
+      <h3>Contact Preferences</h3>
+      <div class="check-item"><input type="checkbox">SMS</div>
+      <div class="check-item"><input type="checkbox">Email</div>
+      <div class="check-item"><input type="checkbox" checked>Voice</div>
+    </div>
+  </div>
+
+  <!-- ---------------- TAB: JOURNEY ---------------- -->
+  <div id="journey" class="tab-content">
+    <div class="card">
+      <h3>Customer Journey</h3>
+      <p>Recent interactions will appear here.</p>
+    </div>
+  </div>
+
+  <!-- ---------------- TAB: ACCOUNT ---------------- -->
+  <div id="pa" class="tab-content">
+    <div class="card">
+      <h3>Account Viewer</h3>
+      <p>Read-only account and service data.</p>
+    </div>
+  </div>
 
 </div>
+
+<script>
+  const tabs = document.querySelectorAll(".tab");
+  const contents = document.querySelectorAll(".tab-content");
+
+  tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      tabs.forEach(t => t.classList.remove("active"));
+      tab.classList.add("active");
+      contents.forEach(c => c.classList.remove("active"));
+      document.getElementById(tab.dataset.tab).classList.add("active");
+    });
+  });
+</script>
 
 </body>
 </html>
