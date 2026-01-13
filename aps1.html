@@ -1,67 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Arizona Public Service – Agent Script</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arizona Public Service</title>
 
 <style>
   :root {
     --primary: #003a8f;
-    --primary-light: #e8f1fb;
     --bg: #f4f6f8;
-    --card-bg: #ffffff;
-    --text-main: #1f2d3d;
-    --text-muted: #5f6c7b;
-    --radius: 14px;
+    --card: #ffffff;
+    --text: #1f2d3d;
+    --muted: #5f6c7b;
+    --radius: 12px;
     --shadow: 0 4px 14px rgba(0,0,0,0.08);
   }
 
   body {
     margin: 0;
+    padding: 16px;
     background: var(--bg);
-    font-family: "Segoe UI", sans-serif;
-    padding: 20px 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--text);
   }
 
-  .container { max-width: 1100px; margin: auto; }
+  .container {
+    max-width: 1100px;
+    margin: auto;
+  }
 
   .header {
     background: var(--primary);
     color: #fff;
-    padding: 16px 24px;
+    padding: 16px;
     border-radius: var(--radius);
-    font-size: 1.25rem;
-    font-weight: 600;
+    font-size: 20px;
+    font-weight: bold;
     text-align: center;
     margin-bottom: 12px;
   }
 
-  .outage-bar { text-align: center; margin-bottom: 22px; }
-
-  .btn {
-    padding: 14px 20px;
-    border-radius: var(--radius);
-    border: none;
-    font-size: 0.95rem;
-    font-weight: 600;
-    cursor: pointer;
+  .outage-bar {
+    text-align: center;
+    margin-bottom: 20px;
   }
 
-  .btn-primary { background: var(--primary); color: #fff; }
+  button {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 12px 18px;
+    border-radius: var(--radius);
+    font-weight: bold;
+    cursor: pointer;
+  }
 
   .tabs {
     display: flex;
     gap: 6px;
     border-bottom: 2px solid #d7e0ea;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
   }
 
   .tab {
     padding: 10px 14px;
     cursor: pointer;
-    font-weight: 600;
-    color: var(--text-muted);
+    font-weight: bold;
+    color: var(--muted);
     border-bottom: 3px solid transparent;
   }
 
@@ -71,46 +76,59 @@
   }
 
   .card {
-    background: var(--card-bg);
-    padding: 22px;
+    background: var(--card);
+    padding: 20px;
     border-radius: var(--radius);
     box-shadow: var(--shadow);
     margin-bottom: 20px;
   }
 
-  h3 { margin-top: 0; color: var(--primary); }
+  h3 {
+    margin-top: 0;
+    color: var(--primary);
+  }
 
   label {
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: var(--text-muted);
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--muted);
     display: block;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
   }
 
   input {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #cbd7e3;
+    padding: 10px;
     border-radius: var(--radius);
-    margin-bottom: 16px;
+    border: 1px solid #cbd7e3;
+    margin-bottom: 14px;
+    box-sizing: border-box;
   }
 
-  .grid-2 {
+  .grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 24px;
+    gap: 20px;
   }
 
-  .check-item {
+  @media (max-width: 700px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+
+  .check {
     display: flex;
-    gap: 10px;
     align-items: center;
+    gap: 10px;
     margin-bottom: 14px;
   }
 
-  .tab-content { display: none; }
-  .tab-content.active { display: block; }
+  .tab-content {
+    display: none;
+  }
+
+  .tab-content.active {
+    display: block;
+  }
 </style>
 </head>
 
@@ -121,9 +139,7 @@
   <div class="header">Arizona Public Service</div>
 
   <div class="outage-bar">
-    <button class="btn btn-primary" type="button">
-      Report an Outage
-    </button>
+    <button type="button">Report an Outage</button>
   </div>
 
   <div class="tabs">
@@ -131,99 +147,118 @@
     <div class="tab" data-tab="workflow">Workflow</div>
   </div>
 
-  <!-- -------- CUSTOMER CONTEXT -------- -->
+  <!-- CUSTOMER CONTEXT -->
   <div id="context" class="tab-content active">
     <div class="card">
       <h3>Customer Context</h3>
 
-      <div class="grid-2">
-        <div><label>First Name</label><input id="firstName"></div>
-        <div><label>Last Name</label><input id="lastName"></div>
+      <div class="grid">
+        <div>
+          <label>First Name</label>
+          <input id="firstName">
+        </div>
+        <div>
+          <label>Last Name</label>
+          <input id="lastName">
+        </div>
 
-        <div><label>Phone Number</label><input id="phoneNumber"></div>
-        <div><label>Account Number</label><input id="accountNumber"></div>
+        <div>
+          <label>Phone Number</label>
+          <input id="phoneNumber">
+        </div>
+        <div>
+          <label>Account Number</label>
+          <input id="accountNumber">
+        </div>
 
-        <div><label>Service Address</label><input id="address"></div>
-        <div><label>Start of Service Date</label><input id="startServiceDate"></div>
+        <div>
+          <label>Service Address</label>
+          <input id="address">
+        </div>
+        <div>
+          <label>Start of Service Date</label>
+          <input id="startDate">
+        </div>
 
-        <div><label>Account Balance</label><input id="accountBalance"></div>
-        <div><label>Plan Rate Details</label><input id="planRate"></div>
+        <div>
+          <label>Account Balance</label>
+          <input id="balance">
+        </div>
+        <div>
+          <label>Plan Rate Details</label>
+          <input id="planRate">
+        </div>
       </div>
 
-      <div class="check-item">
-        <input type="checkbox" id="identityVerified">
-        <label for="identityVerified">Identity Verified</label>
+      <div class="check">
+        <input type="checkbox" id="verified">
+        <label for="verified">Identity Verified</label>
       </div>
 
       <label>Caller Intent</label>
-      <input id="callerIntent">
+      <input id="intent">
     </div>
   </div>
 
-  <!-- -------- WORKFLOW -------- -->
+  <!-- WORKFLOW -->
   <div id="workflow" class="tab-content">
     <div class="card">
-      <h3>Outage & Service Workflow</h3>
-      <div class="check-item"><input type="checkbox">Verify identity</div>
-      <div class="check-item"><input type="checkbox">Confirm service address</div>
-      <div class="check-item"><input type="checkbox">Check outage map</div>
-      <div class="check-item"><input type="checkbox">Submit outage report</div>
+      <h3>Outage Workflow</h3>
+      <div class="check"><input type="checkbox"> Verify identity</div>
+      <div class="check"><input type="checkbox"> Confirm service address</div>
+      <div class="check"><input type="checkbox"> Check outage map</div>
+      <div class="check"><input type="checkbox"> Submit outage report</div>
+      <div class="check"><input type="checkbox"> Provide ETA</div>
     </div>
   </div>
 
 </div>
 
-<!-- ---------------- FIELD MAPPING SCRIPT ---------------- -->
 <script>
-  /* ----- Tabs ----- */
-  const tabs = document.querySelectorAll(".tab");
-  const contents = document.querySelectorAll(".tab-content");
+/* Tabs */
+var tabs = document.querySelectorAll(".tab");
+var contents = document.querySelectorAll(".tab-content");
 
-  tabs.forEach(tab => {
-    tab.addEventListener("click", () => {
-      tabs.forEach(t => t.classList.remove("active"));
-      tab.classList.add("active");
-      contents.forEach(c => c.classList.remove("active"));
-      document.getElementById(tab.dataset.tab).classList.add("active");
-    });
+for (var i = 0; i < tabs.length; i++) {
+  tabs[i].addEventListener("click", function () {
+    for (var j = 0; j < tabs.length; j++) tabs[j].classList.remove("active");
+    this.classList.add("active");
+
+    for (var k = 0; k < contents.length; k++) contents[k].classList.remove("active");
+    document.getElementById(this.getAttribute("data-tab")).classList.add("active");
   });
+}
 
-  /* ----- Query Params ----- */
-  const qp = new URLSearchParams(window.location.search);
+/* Query Params */
+var qp = new URLSearchParams(window.location.search);
 
-  function getQP(...keys) {
-    for (let k of keys) {
-      const v = qp.get(k);
-      if (v && v.trim() !== "") return v;
-    }
-    return "";
+function qpGet() {
+  for (var i = 0; i < arguments.length; i++) {
+    var v = qp.get(arguments[i]);
+    if (v) return v;
   }
+  return "";
+}
 
-  function cleanPhone(v="") {
-    return v.replace(/[^\d]/g,"");
-  }
+function setVal(id, val) {
+  var el = document.getElementById(id);
+  if (el && val) el.value = val;
+}
 
-  function setField(id, val) {
-    const el = document.getElementById(id);
-    if (el && val) el.value = val;
-  }
+/* Field Mapping */
+setVal("firstName", qpGet("FirstName","fname","FNAME"));
+setVal("lastName", qpGet("LastName","lname","LNAME"));
+setVal("phoneNumber", qpGet("ANI","phone","Phone"));
+setVal("accountNumber", qpGet("AccountNumber","ACCOUNT"));
+setVal("address", qpGet("Address","ServiceAddress"));
+setVal("startDate", qpGet("StartDate","ServiceStartDate"));
+setVal("balance", qpGet("Balance","AccountBalance"));
+setVal("planRate", qpGet("RatePlan","PlanRate"));
+setVal("intent", qpGet("Intent","CallerIntent"));
 
-  /* ----- APS FIELD MAPPING ----- */
-  setField("firstName", getQP("FirstName","first_name","fname","FNAME"));
-  setField("lastName", getQP("LastName","last_name","lname","LNAME"));
-  setField("phoneNumber", cleanPhone(getQP("ANI","Phone","phone","ContactNumber")));
-  setField("accountNumber", getQP("AccountNumber","acct","ACCOUNT"));
-  setField("address", getQP("Address","ServiceAddress","service_address"));
-  setField("startServiceDate", getQP("StartDate","ServiceStartDate"));
-  setField("accountBalance", getQP("Balance","AccountBalance"));
-  setField("planRate", getQP("RatePlan","PlanRate"));
-  setField("callerIntent", getQP("Intent","CallerIntent"));
-
-  /* ----- Identity Flag ----- */
-  const verified = getQP("IdentityVerified","verified");
-  if (verified === "true" || verified === "1") {
-    document.getElementById("identityVerified").checked = true;
-  }
+if (qpGet("IdentityVerified") === "true") {
+  document.getElementById("verified").checked = true;
+}
 </script>
 
 </body>
