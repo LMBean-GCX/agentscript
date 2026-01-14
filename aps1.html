@@ -53,6 +53,13 @@
     gap: 14px;
   }
 
+  .button-group {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
   .outage-btn {
     background: var(--accent);
     color: #fff;
@@ -73,6 +80,28 @@
     background: #d66a1a;
     transform: translateY(-2px);
     box-shadow: 0 6px 12px rgba(244,121,32,0.5);
+  }
+
+  .outage-map-btn {
+    background: var(--success);
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: var(--radius);
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(82,164,71,0.4);
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .outage-map-btn:hover {
+    background: #428a39;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(82,164,71,0.5);
   }
 
   /* -------------------- TABS --------------------- */
@@ -376,7 +405,10 @@
 
   <div class="header">
     Arizona Public Service
-    <button class="outage-btn" onclick="reportOutage()">⚡ Report Outage</button>
+    <div class="button-group">
+      <button class="outage-btn" onclick="reportOutage()">⚡ Report Outage</button>
+      <button class="outage-map-btn" onclick="openOutageMap()">🗺️ Outage Map</button>
+    </div>
   </div>
 
   <div class="tabs">
@@ -659,6 +691,21 @@
     );
   }
   window.openApiExplorer = openApiExplorer;
+
+  /* ----- Outage Map Popup ----- */
+  function openOutageMap() {
+    const width = 1200;
+    const height = 800;
+    const left = (screen.width - width) / 2;
+    const top = (screen.height - height) / 2;
+    
+    window.open(
+      'https://outagemap.aps.com/outageviewer/',
+      'Outage Map',
+      `width=${width},height=${height},left=${left},top=${top},toolbar=no,menubar=no,scrollbars=yes,resizable=yes`
+    );
+  }
+  window.openOutageMap = openOutageMap;
 
   /* ----- Caller Intent Selection ----- */
   const intentOptions = document.querySelectorAll(".intent-option");
