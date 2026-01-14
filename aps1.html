@@ -372,6 +372,9 @@
 <!-- TOASTS -->
 <div class="toast-container" id="toastContainer"></div>
 
+<!-- API EXPLORER BUTTON -->
+<button class="api-explorer-btn" onclick="openApiExplorer()">🔧 API Explorer</button>
+
 <div class="container">
 
   <div class="header">
@@ -642,6 +645,21 @@
     // Additional logic for outage reporting can be added here
   }
   window.reportOutage = reportOutage;
+
+  /* ----- API Explorer Popup ----- */
+  function openApiExplorer() {
+    const width = 1200;
+    const height = 800;
+    const left = (screen.width - width) / 2;
+    const top = (screen.height - height) / 2;
+    
+    window.open(
+      'https://developer.genesys.cloud/devapps/api-explorer#',
+      'API Explorer',
+      `width=${width},height=${height},left=${left},top=${top},toolbar=no,menubar=no,scrollbars=yes,resizable=yes`
+    );
+  }
+  window.openApiExplorer = openApiExplorer;
 
   /* ----- Caller Intent Selection ----- */
   const intentOptions = document.querySelectorAll(".intent-option");
