@@ -104,7 +104,6 @@
     box-shadow: 0 6px 12px rgba(82,164,71,0.5);
   }
 
-  /* -------------------- TABS --------------------- */
   .tabs {
     display: flex;
     flex-wrap: wrap;
@@ -133,7 +132,6 @@
     color: var(--primary-dark);
   }
 
-  /* ------------------- CARDS -------------------- */
   .card {
     background: var(--card-bg);
     padding: 24px;
@@ -192,7 +190,6 @@
     .grid-2, .grid-3 { grid-template-columns: 1fr; }
   }
 
-  /* ---------------- CHECKBOXES ------------------ */
   .check-item {
     display: flex;
     align-items: center;
@@ -208,27 +205,6 @@
     cursor: pointer;
   }
 
-  /* ---------------- VERIFICATION STATUS -------------- */
-  .verification-status {
-    display: inline-block;
-    padding: 8px 16px;
-    border-radius: 999px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    margin-top: 8px;
-  }
-
-  .verified {
-    background: var(--success-light);
-    color: var(--success);
-  }
-
-  .not-verified {
-    background: var(--warning-light);
-    color: var(--warning);
-  }
-
-  /* ---------------- ACTION BUTTONS -------------- */
   .actions {
     display: grid;
     grid-template-columns: 1fr;
@@ -274,7 +250,6 @@
     background: #5a6268;
   }
 
-  /* ---------------- ESCALATION CARD -------------- */
   .escalation-card {
     background: var(--warning-light);
     border-left: 4px solid var(--accent);
@@ -298,7 +273,6 @@
     text-decoration: underline;
   }
 
-  /* ---------------- TIMELINE -------------------- */
   .timeline {
     border-left: 3px solid var(--primary);
     padding-left: 18px;
@@ -325,7 +299,6 @@
     margin-top: 4px;
   }
 
-  /* ---------------- PAYMENT DETAILS -------------------- */
   .payment-details {
     background: #ffffff;
     border: 1px solid #e0e0e0;
@@ -344,7 +317,6 @@
     margin: 12px 0; 
   }
 
-  /* ---------------- TOASTS -------------------- */
   .toast-container {
     position: fixed;
     top: 20px;
@@ -369,11 +341,9 @@
     transform: translateY(0);
   }
 
-  /* -------------- TAB CONTENT ------------------- */
   .tab-content { display: none; }
   .tab-content.active { display: block; }
 
-  /* -------------- TABLES ------------------- */
   table {
     width: 100%;
     border-collapse: collapse;
@@ -393,12 +363,42 @@
     color: var(--text-muted);
     font-weight: 600;
   }
+
+  .api-explorer-btn {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 14px 20px;
+    border-radius: var(--radius);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,163,224,0.4);
+    transition: all 0.2s ease;
+    margin-bottom: 24px;
+    margin-top: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: 0;
+    outline: none;
+    float: right;
+    clear: both;
+  }
+
+  .api-explorer-btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,163,224,0.5);
+  }
+
+  .api-explorer-btn:focus {
+    outline: none;
+  }
 </style>
 </head>
 
 <body>
 
-<!-- TOASTS -->
 <div class="toast-container" id="toastContainer"></div>
 
 <div class="container">
@@ -417,9 +417,9 @@
     <div class="tab" data-tab="workflow">Call Workflow</div>
     <div class="tab" data-tab="history">Contact History</div>
     <div class="tab" data-tab="billing">Billing & Rates</div>
+    <div class="tab" data-tab="payments">Payments</div>
   </div>
 
-  <!-- ---------------- TAB: CUSTOMER INFO ---------------- -->
   <div id="customer" class="tab-content active">
     <div class="card">
       <h3>Customer Information</h3>
@@ -452,7 +452,6 @@
     </div>
   </div>
 
-  <!-- ---------------- TAB: ACCOUNT DETAILS ---------------- -->
   <div id="account" class="tab-content">
     <div class="card">
       <h3>Account Overview</h3>
@@ -505,7 +504,6 @@
     </div>
   </div>
 
-  <!-- ---------------- TAB: WORKFLOW ---------------- -->
   <div id="workflow" class="tab-content">
     <div class="card">
       <h3>Customer Service Workflow</h3>
@@ -532,7 +530,6 @@
     </div>
   </div>
 
-  <!-- ---------------- TAB: CONTACT HISTORY ---------------- -->
   <div id="history" class="tab-content">
     <div class="card">
       <h3>Contact History</h3>
@@ -567,7 +564,6 @@
     </div>
   </div>
 
-  <!-- ---------------- TAB: BILLING & RATES ---------------- -->
   <div id="billing" class="tab-content">
     <div class="card">
       <h3>Current Rate Plan</h3>
@@ -602,14 +598,75 @@
     </div>
   </div>
 
-  <!-- API EXPLORER BUTTON -->
+  <div id="payments" class="tab-content">
+    <div class="card">
+      <h3>Payment Processing</h3>
+
+      <div class="grid-2">
+        <div>
+          <label>Total Amount Due</label>
+          <input id="paymentAmountDue" readonly>
+        </div>
+        <div>
+          <label>Due Date</label>
+          <input id="paymentDueDate" value="Jan 28, 2026" readonly>
+        </div>
+      </div>
+
+      <div style="margin-top: 20px;">
+        <label>Payment Amount</label>
+        <input type="number" id="paymentAmount" placeholder="Enter payment amount" step="0.01" min="0">
+        
+        <div style="display: flex; gap: 10px; margin-top: 10px; margin-bottom: 16px;">
+          <button class="btn btn-secondary" onclick="setFullPayment()">Pay Full Amount</button>
+          <button class="btn btn-secondary" onclick="clearPaymentAmount()">Clear</button>
+        </div>
+      </div>
+
+      <div>
+        <label>Payment Date</label>
+        <input type="date" id="paymentDate">
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" onclick="processPayment()">Process Payment</button>
+        <button class="btn btn-accent" onclick="setupPaymentPlan()">Set Up Payment Plan</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Payment History</h3>
+      
+      <div class="timeline">
+        <div class="event">
+          <div class="date">Dec 28, 2025</div>
+          <div class="type">Payment</div>
+          <div class="summary">Payment received: $145.67 - Check #1234</div>
+        </div>
+        <div class="event">
+          <div class="date">Nov 29, 2025</div>
+          <div class="type">Payment</div>
+          <div class="summary">Payment received: $138.92 - Auto-Pay</div>
+        </div>
+        <div class="event">
+          <div class="date">Oct 30, 2025</div>
+          <div class="type">Payment</div>
+          <div class="summary">Payment received: $152.45 - Online</div>
+        </div>
+        <div class="event">
+          <div class="date">Sep 28, 2025</div>
+          <div class="type">Payment</div>
+          <div class="summary">Payment received: $147.33 - Phone</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <button class="api-explorer-btn" onclick="openApiExplorer()">🔧 API Explorer</button>
 
 </div>
 
-<!-- ------------------------ SCRIPT ------------------------- -->
 <script>
-  /* ----- Tabs ----- */
   const tabs = document.querySelectorAll(".tab");
   const contents = document.querySelectorAll(".tab-content");
 
@@ -623,7 +680,6 @@
     });
   });
 
-  /* ----- Query Parameters Handler ----- */
   const qp = new URLSearchParams(window.location.search);
 
   function getQP(...keys) {
@@ -638,7 +694,6 @@
     return input.replace(/[\[\]\(\)\-]/g,"").trim();
   }
 
-  /* ----- Field Mapping ----- */
   const firstName = getQP("firstName","FirstName","fname","FNAME") || "John";
   const lastName = getQP("lastName","LastName","lname","LNAME") || "Doe";
   
@@ -649,7 +704,6 @@
   document.getElementById("address").value = getQP("address","serviceAddress","ADDRESS") || "1234 E Desert View Rd, Phoenix, AZ 85016";
   document.getElementById("serviceDate").value = getQP("serviceDate","startDate","START_DATE") || "2019-03-15";
   
-  /* ----- Account Balance ----- */
   const balance = parseFloat(getQP("accountBalance","balance","BALANCE")) || 187.45;
   const prevBalance = balance * 0.45;
   const currentCharges = balance * 0.65;
@@ -661,93 +715,44 @@
   document.getElementById("paymentsReceived").innerText = "$" + paymentsReceived.toFixed(2);
   document.getElementById("totalDue").innerText = "$" + balance.toFixed(2);
 
-  /* ----- Identity Verification Toggle ----- */
-  const identityCheckbox = document.getElementById("identityVerified");
+  document.getElementById("paymentAmountDue").value = "$" + balance.toFixed(2);
+  
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+  const formattedDate = `${year}-${month}-${day}`;
+  document.getElementById("paymentDate").value = formattedDate;
 
+  const identityCheckbox = document.getElementById("identityVerified");
   identityCheckbox.addEventListener("change", () => {
     if (identityCheckbox.checked) {
       showToast("Customer identity verified");
     }
   });
 
-  /* ----- Report Outage Button ----- */
   function reportOutage() {
     showToast("Outage report initiated for service address");
-    // Additional logic for outage reporting can be added here
   }
-  window.reportOutage = reportOutage;
 
-  /* ----- API Explorer Popup ----- */
-  function openApiExplorer() {
-    const width = 1200;
-    const height = 800;
-    const left = (screen.width - width) / 2;
-    const top = (screen.height - height) / 2;
-    
-    window.open(
-      'https://developer.genesys.cloud/devapps/api-explorer#',
-      'API Explorer',
-      `width=${width},height=${height},left=${left},top=${top},toolbar=no,menubar=no,scrollbars=yes,resizable=yes`
-    );
-  }
-  window.openApiExplorer = openApiExplorer;
-
-  /* ----- Outage Map Popup ----- */
-  function openOutageMap() {
-    const width = 1200;
-    const height = 800;
-    const left = (screen.width - width) / 2;
-    const top = (screen.height - height) / 2;
-    
-    window.open(
-      'https://outagemap.aps.com/outageviewer/',
-      'Outage Map',
-      `width=${width},height=${height},left=${left},top=${top},toolbar=no,menubar=no,scrollbars=yes,resizable=yes`
-    );
-  }
-  window.openOutageMap = openOutageMap;
-
-  /* ----- Caller Intent Selection ----- */
-  const intentOptions = document.querySelectorAll(".intent-option");
-  const callerIntentInput = document.getElementById("callerIntent");
-
-  intentOptions.forEach(option => {
-    option.addEventListener("click", () => {
-      intentOptions.forEach(opt => opt.classList.remove("selected"));
-      option.classList.add("selected");
-      
-      const intent = option.dataset.intent;
-      callerIntentInput.value = intent;
-      showToast("Caller intent: " + option.innerText);
-    });
-  });
-
-  /* ----- Escalation Card Toggle ----- */
   function toggleEscalationCard() {
     const card = document.getElementById("escalationCard");
     card.style.display = (card.style.display === "block") ? "none" : "block";
   }
-  window.toggleEscalationCard = toggleEscalationCard;
 
-  /* ----- Toast System ----- */
   function showToast(text) {
     const container = document.getElementById("toastContainer");
-
     const toast = document.createElement("div");
     toast.className = "toast";
     toast.innerText = text + " ✓";
-
     container.appendChild(toast);
-
     setTimeout(() => toast.classList.add("show"), 10);
     setTimeout(() => {
       toast.classList.remove("show");
       setTimeout(() => toast.remove(), 300);
     }, 3000);
   }
-  window.showToast = showToast;
 
-  /* ----- Escalation Option Clicks ----- */
   document.querySelectorAll(".escalation-option").forEach(option => {
     option.addEventListener("click", () => {
       const msg = option.innerText.trim();
@@ -756,7 +761,60 @@
     });
   });
 
-  /* ----- Theme Overrides ----- */
+  function openApiExplorer() {
+    const width = 1200;
+    const height = 800;
+    const left = (screen.width - width) / 2;
+    const top = (screen.height - height) / 2;
+    window.open(
+      'https://developer.genesys.cloud/devapps/api-explorer#',
+      'API Explorer',
+      `width=${width},height=${height},left=${left},top=${top},toolbar=no,menubar=no,scrollbars=yes,resizable=yes`
+    );
+  }
+
+  function openOutageMap() {
+    const width = 1200;
+    const height = 800;
+    const left = (screen.width - width) / 2;
+    const top = (screen.height - height) / 2;
+    window.open(
+      'https://outagemap.aps.com/outageviewer/',
+      'Outage Map',
+      `width=${width},height=${height},left=${left},top=${top},toolbar=no,menubar=no,scrollbars=yes,resizable=yes`
+    );
+  }
+
+  function setFullPayment() {
+    const amountDue = parseFloat(document.getElementById("paymentAmountDue").value.replace('$', ''));
+    document.getElementById("paymentAmount").value = amountDue.toFixed(2);
+  }
+
+  function clearPaymentAmount() {
+    document.getElementById("paymentAmount").value = '';
+  }
+
+  function processPayment() {
+    const amount = document.getElementById("paymentAmount").value;
+    const date = document.getElementById("paymentDate").value;
+    
+    if (!amount || parseFloat(amount) <= 0) {
+      showToast("Please enter a valid payment amount");
+      return;
+    }
+    
+    if (!date) {
+      showToast("Please select a payment date");
+      return;
+    }
+    
+    showToast(`Payment of $${parseFloat(amount).toFixed(2)} processed successfully`);
+  }
+
+  function setupPaymentPlan() {
+    showToast("Payment plan setup initiated");
+  }
+
   const primaryColor = getQP("primaryColor","PrimaryColor");
   const accentColor = getQP("accentColor","AccentColor");
   const bgColor = getQP("bgColor","BackgroundColor");
