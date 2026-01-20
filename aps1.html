@@ -444,7 +444,7 @@
         <div>
           <label>Identity Verification</label>
           <div class="check-item">
-            <input type="checkbox" id="identityVerified">
+            <input type="checkbox" id="identityVerified" checked>
             <span>Customer Identity Verified</span>
           </div>
         </div>
@@ -694,15 +694,15 @@
     return input.replace(/[\[\]\(\)\-]/g,"").trim();
   }
 
-  const firstName = getQP("firstName","FirstName","fname","FNAME") || "John";
-  const lastName = getQP("lastName","LastName","lname","LNAME") || "Doe";
+  const firstName = getQP("firstName","FirstName","fname","FNAME") || "Alex";
+  const lastName = getQP("lastName","LastName","lname","LNAME") || "Johnson";
   
   document.getElementById("firstName").value = firstName;
   document.getElementById("lastName").value = lastName;
-  document.getElementById("phoneNumber").value = cleanPhone(getQP("phone","phoneNumber","PHONE")) || "602-555-0123";
-  document.getElementById("accountNumber").value = getQP("accountNumber","account","ACCOUNT") || "APS-4478219";
-  document.getElementById("address").value = getQP("address","serviceAddress","ADDRESS") || "1234 E Desert View Rd, Phoenix, AZ 85016";
-  document.getElementById("serviceDate").value = getQP("serviceDate","startDate","START_DATE") || "2019-03-15";
+  document.getElementById("phoneNumber").value = cleanPhone(getQP("phone","phoneNumber","PHONE")) || "+1 (303) 803-6511";
+  document.getElementById("accountNumber").value = getQP("accountNumber","account","ACCOUNT") || "A456789";
+  document.getElementById("address").value = getQP("address","serviceAddress","ADDRESS") || "200 E ECHO LN PHOENIX AZ 85020-3572";
+  document.getElementById("serviceDate").value = getQP("serviceDate","startDate","START_DATE") || "2019-10-08";
   
   const balance = parseFloat(getQP("accountBalance","balance","BALANCE")) || 187.45;
   const prevBalance = balance * 0.45;
