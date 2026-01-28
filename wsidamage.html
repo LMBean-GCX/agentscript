@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Williams-Sonoma – Delivery Damage Report</title>
+
+<style>
+  :root {
+    --ws-charcoal: #282828;
+    --ws-gold: #c9a96e;
+    --ws-light-gold: #f5f0e8;
+    --ws-white: #ffffff;
+    --ws-gray: #5a5a5a;
+    --ws-light-gray: #e8e8e8;
+    --ws-border: #d0d0d0;
+    --ws-red: #c74444;
+    --shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    background: var(--ws-light-gold);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    color: var(--ws-charcoal);
+    padding: 20px 16px;
+    line-height: 1.5;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: auto;
+  }
+
+  .header {
+    background: var(--ws-white);
+    color: var(--ws-charcoal);
+    padding: 24px;
+    margin-bottom: 24px;
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+
+  .logo {
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
+    color: var(--ws-gray);
+    font-weight: 400;
+  }
+
+  .card {
+    background: var(--ws-white);
+    padding: 32px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+  }
+
+  h2 {
+    margin-top: 0;
+    color: var(--ws-charcoal);
+    font-size: 1.35rem;
+    font-weight: 600;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  label {
+    display: block;
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--ws-charcoal);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  input[type="text"],
+  input[type="date"],
+  input[type="time"],
+  textarea,
+  select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--ws-border);
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    background: var(--ws-white);
+    transition: border-color 0.2s ease;
+  }
+
+  input[type="text"]:focus,
+  input[type="date"]:focus,
+  input[type="time"]:focus,
+  textarea:focus,
+  select:focus {
+    outline: none;
+    border-color: var(--ws-gold);
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  @media (max-width: 700px) {
+    .grid-2 { 
+      grid-template-columns: 1fr; 
+      gap: 0;
+    }
+  }
+
+  /* File Upload Area */
+  .upload-area {
+    border: 2px dashed var(--ws-border);
+    padding: 40px 20px;
+    text-align: center;
+    margin-bottom: 20px;
+    background: #fafafa;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .upload-area:hover {
+    border-color: var(--ws-gold);
+    background: var(--ws-light-gold);
+  }
+
+  .upload-area.dragover {
+    border-color: var(--ws-gold);
+    background: var(--ws-light-gold);
+    border-style: solid;
+  }
+
+  .upload-icon {
+    font-size: 3rem;
+    color: var(--ws-gray);
+    margin-bottom: 12px;
+  }
+
+  .upload-text {
+    font-size: 1rem;
+    color: var(--ws-charcoal);
+    font-weight: 600;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .upload-subtext {
+    font-size: 0.85rem;
+    color: var(--ws-gray);
+  }
+
+  #fileInput {
+    display: none;
+  }
+
+  /* Image Preview Grid */
+  .preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .preview-item {
+    position: relative;
+    border: 1px solid var(--ws-border);
+    background: var(--ws-white);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .preview-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .preview-remove {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: var(--ws-red);
+    color: var(--ws-white);
+    border: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: background 0.2s ease;
+  }
+
+  .preview-remove:hover {
+    background: #a83636;
+  }
+
+  .preview-info {
+    padding: 8px;
+    font-size: 0.75rem;
+    color: var(--ws-gray);
+    background: #fafafa;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Damage Type Selection */
+  .damage-types {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .damage-type-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    border: 1px solid var(--ws-border);
+    background: var(--ws-white);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .damage-type-option:hover {
+    border-color: var(--ws-gold);
+    background: var(--ws-light-gold);
+  }
+
+  .damage-type-option input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  .damage-type-option label {
+    margin: 0;
+    cursor: pointer;
+    text-transform: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+  }
+
+  /* Buttons */
+  .btn-container {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  .btn {
+    padding: 14px 32px;
+    border: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.2s ease;
+    flex: 1;
+  }
+
+  .btn-primary {
+    background: var(--ws-charcoal);
+    color: var(--ws-white);
+  }
+
+  .btn-primary:hover {
+    background: #1a1a1a;
+  }
+
+  .btn-primary:disabled {
+    background: var(--ws-light-gray);
+    cursor: not-allowed;
+  }
+
+  .btn-secondary {
+    background: var(--ws-white);
+    color: var(--ws-charcoal);
+    border: 1px solid var(--ws-charcoal);
+  }
+
+  .btn-secondary:hover {
+    background: var(--ws-light-gold);
+  }
+
+  /* Toast notifications */
+  .toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 3000;
+  }
+
+  .toast {
+    background: var(--ws-charcoal);
+    color: var(--ws-white);
+    padding: 16px 24px;
+    margin-bottom: 10px;
+    box-shadow: var(--shadow);
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    font-size: 0.9rem;
+  }
+
+  .toast.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .toast.success {
+    background: #4a7c59;
+  }
+
+  .toast.error {
+    background: var(--ws-red);
+  }
+
+  .required {
+    color: var(--ws-red);
+  }
+
+  .info-box {
+    background: var(--ws-light-gold);
+    padding: 16px;
+    margin-bottom: 20px;
+    border-left: 4px solid var(--ws-gold);
+    font-size: 0.9rem;
+  }
+
+  .image-count {
+    font-size: 0.85rem;
+    color: var(--ws-gray);
+    margin-bottom: 12px;
+    text-align: center;
+  }
+
+  .readonly-field {
+    background: #f9f9f9;
+  }
+</style>
+</head>
+
+<body>
+
+<!-- TOASTS -->
+<div class="toast-container" id="toastContainer"></div>
+
+<div class="container">
+
+  <div class="header">
+    <div class="logo">Williams-Sonoma</div>
+    <div class="subtitle">Delivery Damage Report</div>
+  </div>
+
+  <div class="card">
+    <h2>Customer Information</h2>
+
+    <div class="grid-2">
+      <div>
+        <label>First Name <span class="required">*</span></label>
+        <input type="text" id="firstName" placeholder="Enter first name" required>
+      </div>
+      <div>
+        <label>Last Name <span class="required">*</span></label>
+        <input type="text" id="lastName" placeholder="Enter last name" required>
+      </div>
+    </div>
+
+    <label>Delivery Address <span class="required">*</span></label>
+    <input type="text" id="address" placeholder="Enter delivery address" required>
+
+    <div class="grid-2">
+      <div>
+        <label>Delivery Date</label>
+        <input type="text" id="deliveryDate" class="readonly-field" readonly>
+      </div>
+      <div>
+        <label>Delivery Time</label>
+        <input type="text" id="deliveryTime" class="readonly-field" readonly>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Damage Information</h2>
+
+    <label>Type of Damage <span class="required">*</span></label>
+    <div class="damage-types">
+      <div class="damage-type-option">
+        <input type="checkbox" id="damageScratches" value="Scratches/Scuffs">
+        <label for="damageScratches">Scratches/Scuffs</label>
+      </div>
+      <div class="damage-type-option">
+        <input type="checkbox" id="damageDents" value="Dents">
+        <label for="damageDents">Dents</label>
+      </div>
+      <div class="damage-type-option">
+        <input type="checkbox" id="damageChips" value="Chips/Cracks">
+        <label for="damageChips">Chips/Cracks</label>
+      </div>
+      <div class="damage-type-option">
+        <input type="checkbox" id="damageStains" value="Stains/Marks">
+        <label for="damageStains">Stains/Marks</label>
+      </div>
+      <div class="damage-type-option">
+        <input type="checkbox" id="damageBroken" value="Broken Parts">
+        <label for="damageBroken">Broken Parts</label>
+      </div>
+      <div class="damage-type-option">
+        <input type="checkbox" id="damagePackaging" value="Packaging Damage">
+        <label for="damagePackaging">Packaging Damage</label>
+      </div>
+    </div>
+
+    <label>Description of Damage <span class="required">*</span></label>
+    <textarea id="damageDescription" placeholder="Please provide detailed description of the damage..." required></textarea>
+  </div>
+
+  <div class="card">
+    <h2>Upload Damage Photos</h2>
+
+    <div class="info-box">
+      <strong>Photo Guidelines:</strong> Please upload clear photos showing the damaged item from multiple angles. Accepted formats: JPG, PNG, HEIC. Maximum file size: 10MB per image.
+    </div>
+
+    <div class="upload-area" id="uploadArea">
+      <div class="upload-icon">📷</div>
+      <div class="upload-text">Click or Drag to Upload Photos</div>
+      <div class="upload-subtext">Support for JPG, PNG, HEIC (Max 10MB each)</div>
+    </div>
+
+    <input type="file" id="fileInput" accept="image/jpeg,image/png,image/heic" multiple>
+
+    <div class="image-count" id="imageCount">No images uploaded</div>
+
+    <div class="preview-grid" id="previewGrid"></div>
+
+    <div class="btn-container">
+      <button class="btn btn-secondary" id="clearBtn">Clear Form</button>
+      <button class="btn btn-primary" id="submitBtn" disabled>Submit Report</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ------------------------ SCRIPT ------------------------- -->
+<script>
+  // Get query parameters for pre-filling
+  const qp = new URLSearchParams(window.location.search);
+
+  function getQP(...keys) {
+    for (let k of keys) {
+      const v = qp.get(k);
+      if (v && v.trim() !== "") return v;
+    }
+    return "";
+  }
+
+  // Pre-fill fields from query parameters
+  document.getElementById("firstName").value = getQP("firstName", "firstname", "fname", "FNAME");
+  document.getElementById("lastName").value = getQP("lastName", "lastname", "lname", "LNAME");
+  document.getElementById("address").value = getQP("address", "Address", "deliveryAddress");
+
+  // Calculate delivery date/time (2 days ago with random time between 9 AM - 5 PM)
+  function setDeliveryDateTime() {
+    const twoDaysAgo = new Date();
+    twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+    
+    // Format date
+    const dateStr = twoDaysAgo.toLocaleDateString('en-US', { 
+      weekday: 'long', 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    });
+    
+    // Random time between 9 AM (9) and 5 PM (17)
+    const randomHour = Math.floor(Math.random() * 8) + 9; // 9-16 (9 AM to 4 PM)
+    const randomMinute = Math.random() < 0.5 ? "00" : "30";
+    
+    let timeStr;
+    if (randomHour === 12) {
+      timeStr = `12:${randomMinute} PM`;
+    } else if (randomHour < 12) {
+      timeStr = `${randomHour}:${randomMinute} AM`;
+    } else {
+      timeStr = `${randomHour - 12}:${randomMinute} PM`;
+    }
+    
+    document.getElementById("deliveryDate").value = dateStr;
+    document.getElementById("deliveryTime").value = timeStr;
+  }
+
+  setDeliveryDateTime();
+
+  // Image upload handling
+  let uploadedFiles = [];
+  const maxFileSize = 10 * 1024 * 1024; // 10MB
+
+  const uploadArea = document.getElementById("uploadArea");
+  const fileInput = document.getElementById("fileInput");
+  const previewGrid = document.getElementById("previewGrid");
+  const imageCount = document.getElementById("imageCount");
+
+  uploadArea.addEventListener("click", () => fileInput.click());
+
+  // Drag and drop
+  uploadArea.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    uploadArea.classList.add("dragover");
+  });
+
+  uploadArea.addEventListener("dragleave", () => {
+    uploadArea.classList.remove("dragover");
+  });
+
+  uploadArea.addEventListener("drop", (e) => {
+    e.preventDefault();
+    uploadArea.classList.remove("dragover");
+    handleFiles(e.dataTransfer.files);
+  });
+
+  fileInput.addEventListener("change", (e) => {
+    handleFiles(e.target.files);
+  });
+
+  function handleFiles(files) {
+    Array.from(files).forEach(file => {
+      if (!file.type.match(/image\/(jpeg|png|heic)/)) {
+        showToast("Only JPG, PNG, and HEIC images are allowed", false);
+        return;
+      }
+
+      if (file.size > maxFileSize) {
+        showToast(`${file.name} exceeds 10MB limit`, false);
+        return;
+      }
+
+      uploadedFiles.push(file);
+      createPreview(file);
+    });
+
+    updateImageCount();
+    checkFormComplete();
+    fileInput.value = ""; // Reset input
+  }
+
+  function createPreview(file) {
+    const reader = new FileReader();
+    
+    reader.onload = (e) => {
+      const previewItem = document.createElement("div");
+      previewItem.className = "preview-item";
+      previewItem.dataset.filename = file.name;
+
+      previewItem.innerHTML = `
+        <img src="${e.target.result}" alt="${file.name}" class="preview-image">
+        <div class="preview-info">${file.name}</div>
+        <button class="preview-remove" onclick="removeImage('${file.name}')">×</button>
+      `;
+
+      previewGrid.appendChild(previewItem);
+    };
+
+    reader.readAsDataURL(file);
+  }
+
+  window.removeImage = function(filename) {
+    uploadedFiles = uploadedFiles.filter(f => f.name !== filename);
+    
+    const previewItem = document.querySelector(`[data-filename="${filename}"]`);
+    if (previewItem) {
+      previewItem.remove();
+    }
+
+    updateImageCount();
+    checkFormComplete();
+  };
+
+  function updateImageCount() {
+    const count = uploadedFiles.length;
+    if (count === 0) {
+      imageCount.textContent = "No images uploaded";
+    } else if (count === 1) {
+      imageCount.textContent = "1 image uploaded";
+    } else {
+      imageCount.textContent = `${count} images uploaded`;
+    }
+  }
+
+  // Form validation
+  function checkFormComplete() {
+    const firstName = document.getElementById("firstName").value.trim();
+    const lastName = document.getElementById("lastName").value.trim();
+    const address = document.getElementById("address").value.trim();
+    const description = document.getElementById("damageDescription").value.trim();
+    
+    const damageTypes = document.querySelectorAll('.damage-types input[type="checkbox"]:checked');
+    const hasDamageType = damageTypes.length > 0;
+    const hasImages = uploadedFiles.length > 0;
+
+    const isComplete = firstName && lastName && address && description && hasDamageType && hasImages;
+
+    document.getElementById("submitBtn").disabled = !isComplete;
+  }
+
+  // Input validation
+  ["firstName", "lastName", "address", "damageDescription"].forEach(id => {
+    document.getElementById(id).addEventListener("input", checkFormComplete);
+  });
+
+  // Damage type checkboxes
+  document.querySelectorAll('.damage-types input[type="checkbox"]').forEach(checkbox => {
+    checkbox.addEventListener("change", checkFormComplete);
+  });
+
+  // Toast system
+  function showToast(text, success = false) {
+    const container = document.getElementById("toastContainer");
+    const toast = document.createElement("div");
+    toast.className = "toast" + (success ? " success" : " error");
+    toast.innerText = text;
+
+    container.appendChild(toast);
+
+    setTimeout(() => toast.classList.add("show"), 10);
+    setTimeout(() => {
+      toast.classList.remove("show");
+      setTimeout(() => toast.remove(), 300);
+    }, 3000);
+  }
+
+  // Submit button
+  document.getElementById("submitBtn").addEventListener("click", function() {
+    const damageTypes = Array.from(document.querySelectorAll('.damage-types input[type="checkbox"]:checked'))
+      .map(cb => cb.value);
+
+    const reportData = {
+      firstName: document.getElementById("firstName").value,
+      lastName: document.getElementById("lastName").value,
+      address: document.getElementById("address").value,
+      deliveryDate: document.getElementById("deliveryDate").value,
+      deliveryTime: document.getElementById("deliveryTime").value,
+      damageTypes: damageTypes,
+      damageDescription: document.getElementById("damageDescription").value,
+      imageCount: uploadedFiles.length,
+      images: uploadedFiles.map(f => ({
+        name: f.name,
+        size: f.size,
+        type: f.type
+      }))
+    };
+
+    console.log("Damage Report Submitted:", reportData);
+    console.log("Image Files:", uploadedFiles);
+    
+    // This is where you would integrate with Genesys Cloud API
+    // Example: Send data and images via FormData
+    // const formData = new FormData();
+    // Object.keys(reportData).forEach(key => {
+    //   formData.append(key, typeof reportData[key] === 'object' ? JSON.stringify(reportData[key]) : reportData[key]);
+    // });
+    // uploadedFiles.forEach(file => formData.append('images', file));
+    // window.parent.postMessage({type: 'damageReport', data: formData}, '*');
+    
+    showToast("✓ Damage report successfully submitted!", true);
+    
+    // Optional: Clear form after 2 seconds
+    setTimeout(() => {
+      clearForm();
+    }, 2000);
+  });
+
+  // Clear button
+  document.getElementById("clearBtn").addEventListener("click", function() {
+    if (confirm("Are you sure you want to clear all form data and uploaded images?")) {
+      clearForm();
+      showToast("Form cleared", false);
+    }
+  });
+
+  function clearForm() {
+    document.getElementById("firstName").value = "";
+    document.getElementById("lastName").value = "";
+    document.getElementById("address").value = "";
+    document.getElementById("damageDescription").value = "";
+    
+    document.querySelectorAll('.damage-types input[type="checkbox"]').forEach(cb => {
+      cb.checked = false;
+    });
+    
+    uploadedFiles = [];
+    previewGrid.innerHTML = "";
+    updateImageCount();
+    
+    document.getElementById("submitBtn").disabled = true;
+    
+    // Reset delivery date/time with new random time
+    setDeliveryDateTime();
+  }
+</script>
+
+</body>
+</html>
