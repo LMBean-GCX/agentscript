@@ -3,248 +3,342 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Surgery Partners – Patient Services Script</title>
+<title>Williams-Sonoma – Delivery Scheduler</title>
 
 <style>
   :root {
-    --primary: #0056a6;
-    --primary-light: #e8f1fb;
-    --bg: #f4f6f8;
-    --card-bg: #ffffff;
-    --text-main: #1f2d3d;
-    --text-muted: #5f6c7b;
-    --radius: 14px;
-    --shadow: 0 4px 14px rgba(0,0,0,0.08);
-    --danger: #e26c6c;
-    --danger-light: #f9e5e5;
+    --ws-charcoal: #282828;
+    --ws-gold: #c9a96e;
+    --ws-light-gold: #f5f0e8;
+    --ws-white: #ffffff;
+    --ws-gray: #5a5a5a;
+    --ws-light-gray: #e8e8e8;
+    --ws-border: #d0d0d0;
+    --shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  * {
+    box-sizing: border-box;
   }
 
   body {
     margin: 0;
-    background: var(--bg);
-    font-family: "Segoe UI", sans-serif;
-    color: var(--text-main);
+    background: var(--ws-light-gold);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    color: var(--ws-charcoal);
     padding: 20px 16px;
+    line-height: 1.5;
   }
 
   .container {
-    max-width: 1100px;
+    max-width: 800px;
     margin: auto;
   }
 
   .header {
-    background: var(--primary);
-    color: #fff;
-    padding: 16px 24px;
-    border-radius: var(--radius);
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 22px;
+    background: var(--ws-white);
+    color: var(--ws-charcoal);
+    padding: 24px;
+    margin-bottom: 24px;
     text-align: center;
-  }
-
-  /* -------------------- TABS --------------------- */
-  .tabs {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    border-bottom: 2px solid #d7e0ea;
-    margin-bottom: 20px;
-  }
-
-  .tab {
-    padding: 10px 14px;
-    cursor: pointer;
-    font-size: 0.92rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    border-bottom: 3px solid transparent;
-    transition: color 0.25s ease, border-bottom 0.25s ease;
-    white-space: nowrap;
-  }
-
-  .tab.active {
-    color: var(--primary);
-    border-bottom: 3px solid var(--primary);
-  }
-
-  /* ------------------- CARDS -------------------- */
-  .card {
-    background: var(--card-bg);
-    padding: 22px;
-    margin-bottom: 20px;
-    border-radius: var(--radius);
     box-shadow: var(--shadow);
   }
 
-  h3 {
-    margin-top: 0;
-    color: var(--primary);
-    font-size: 1.15rem;
+  .logo {
+    font-size: 1.5rem;
     font-weight: 600;
-    margin-bottom: 16px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
+    color: var(--ws-gray);
+    font-weight: 400;
+  }
+
+  .card {
+    background: var(--ws-white);
+    padding: 32px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+  }
+
+  h2 {
+    margin-top: 0;
+    color: var(--ws-charcoal);
+    font-size: 1.35rem;
+    font-weight: 600;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
   }
 
   label {
     display: block;
-    font-size: 0.82rem;
-    margin-bottom: 6px;
+    font-size: 0.85rem;
+    margin-bottom: 8px;
     font-weight: 600;
-    color: var(--text-muted);
+    color: var(--ws-charcoal);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
   }
 
-  input {
+  input[type="text"],
+  input[type="date"],
+  input[type="time"],
+  select {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #cbd7e3;
-    border-radius: var(--radius);
-    margin-bottom: 16px;
-    font-size: 0.92rem;
-    box-sizing: border-box;
+    padding: 12px 16px;
+    border: 1px solid var(--ws-border);
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    background: var(--ws-white);
+    transition: border-color 0.2s ease;
+  }
+
+  input[type="text"]:focus,
+  input[type="date"]:focus,
+  input[type="time"]:focus,
+  select:focus {
+    outline: none;
+    border-color: var(--ws-gold);
   }
 
   .grid-2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 24px;
+    gap: 20px;
   }
 
   @media (max-width: 700px) {
-    .grid-2 { grid-template-columns: 1fr; }
+    .grid-2 { 
+      grid-template-columns: 1fr; 
+      gap: 0;
+    }
   }
 
-  /* ---------------- CHECKBOXES ------------------ */
-  .check-item {
+  /* Calendar styling */
+  .calendar-container {
+    margin-bottom: 20px;
+  }
+
+  .calendar-header {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 14px;
-    font-size: 0.95rem;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--ws-light-gray);
   }
 
-  .check-item input {
-    width: 18px;
-    height: 18px;
-    margin: 0;
+  .calendar-header button {
+    background: none;
+    border: none;
+    color: var(--ws-charcoal);
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 4px 12px;
+    transition: color 0.2s ease;
   }
 
-  /* ---------------- ACTION BUTTONS -------------- */
-  .actions {
+  .calendar-header button:hover {
+    color: var(--ws-gold);
+  }
+
+  .calendar-month {
+    font-weight: 600;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .calendar-grid {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 14px;
-    margin-top: 20px;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+  }
+
+  .calendar-day-header {
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--ws-gray);
+    padding: 8px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .calendar-day {
+    text-align: center;
+    padding: 12px;
+    cursor: pointer;
+    border: 1px solid var(--ws-light-gray);
+    background: var(--ws-white);
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+  }
+
+  .calendar-day:hover:not(.disabled):not(.other-month) {
+    background: var(--ws-light-gold);
+    border-color: var(--ws-gold);
+  }
+
+  .calendar-day.selected {
+    background: var(--ws-gold);
+    color: var(--ws-white);
+    border-color: var(--ws-gold);
+    font-weight: 600;
+  }
+
+  .calendar-day.disabled {
+    color: var(--ws-light-gray);
+    cursor: not-allowed;
+    background: #fafafa;
+  }
+
+  .calendar-day.other-month {
+    color: var(--ws-light-gray);
+  }
+
+  .calendar-day.today {
+    border-color: var(--ws-gold);
+    font-weight: 600;
+  }
+
+  /* Time slots */
+  .time-slots {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .time-slot {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid var(--ws-border);
+    background: var(--ws-white);
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+  }
+
+  .time-slot:hover {
+    background: var(--ws-light-gold);
+    border-color: var(--ws-gold);
+  }
+
+  .time-slot.selected {
+    background: var(--ws-gold);
+    color: var(--ws-white);
+    border-color: var(--ws-gold);
+    font-weight: 600;
+  }
+
+  /* Buttons */
+  .btn-container {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
   }
 
   .btn {
-    padding: 14px;
-    border-radius: var(--radius);
+    padding: 14px 32px;
     border: none;
-    font-size: 0.95rem;
-    font-weight: 600;
-    cursor: pointer;
-  }
-
-  .btn-danger { background: var(--danger); color: #fff; }
-  .btn-danger:hover { background: #d45252; }
-
-  /* Primary button (used for Update Contact Preferences) */
-  .btn-primary { background: var(--primary); color: #fff; }
-  .btn-primary:hover { background: #00417c; }
-
-  /* ---------------- SUPERVISOR ACTION CARD -------------- */
-  .supervisor-card {
-    background: var(--danger-light);
-    border-left: 4px solid var(--danger);
-    padding: 14px 16px;
-    margin-top: 8px;
-    border-radius: 10px;
-    box-shadow: var(--shadow);
-    display: none;
-  }
-
-  .supervisor-option {
-    padding: 6px 0;
-    cursor: pointer;
     font-size: 0.9rem;
-  }
-
-  .supervisor-option:hover {
-    text-decoration: underline;
-  }
-
-  /* ---------------- TIMELINE -------------------- */
-  .timeline {
-    border-left: 3px solid var(--primary);
-    padding-left: 16px;
-  }
-  .event { margin-bottom: 16px; }
-  .event .date { font-size: 0.8rem; font-weight: 600; color: var(--primary); }
-  .event .type {
-    font-size: 0.75rem;
-    background: var(--primary-light);
-    padding: 4px 8px;
-    border-radius: 999px;
-    display: inline-block;
-    margin: 4px 0;
     font-weight: 600;
-    color: var(--primary);
-  }
-  .event .summary { font-size: 0.9rem; color: var(--text-muted); }
-
-  /* ---------------- COST BREAKDOWN -------------------- */
-  .breakdown-card {
-    background: #ffffff;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 16px;
-    margin-top: 10px;
-    display: none;
-  }
-  .breakdown-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 6px 0;
-    font-size: 0.9rem;
-  }
-  .breakdown-divider { border-top: 1px solid #d9dee4; margin: 10px 0; }
-  .toggle-breakdown {
     cursor: pointer;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--primary);
-    margin-top: -10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.2s ease;
+    flex: 1;
   }
 
-  /* ---------------- TOASTS -------------------- */
+  .btn-primary {
+    background: var(--ws-charcoal);
+    color: var(--ws-white);
+  }
+
+  .btn-primary:hover {
+    background: #1a1a1a;
+  }
+
+  .btn-primary:disabled {
+    background: var(--ws-light-gray);
+    cursor: not-allowed;
+  }
+
+  .btn-secondary {
+    background: var(--ws-white);
+    color: var(--ws-charcoal);
+    border: 1px solid var(--ws-charcoal);
+  }
+
+  .btn-secondary:hover {
+    background: var(--ws-light-gold);
+  }
+
+  /* Toast notifications */
   .toast-container {
     position: fixed;
     top: 20px;
     right: 20px;
     z-index: 3000;
   }
+
   .toast {
-    background: var(--danger);
-    color: #fff;
-    padding: 12px 18px;
-    border-radius: 10px;
-    box-shadow: var(--shadow);
+    background: var(--ws-charcoal);
+    color: var(--ws-white);
+    padding: 16px 24px;
     margin-bottom: 10px;
+    box-shadow: var(--shadow);
     opacity: 0;
     transform: translateY(-10px);
     transition: opacity 0.3s ease, transform 0.3s ease;
     font-size: 0.9rem;
-    font-weight: 600;
   }
+
   .toast.show {
     opacity: 1;
     transform: translateY(0);
   }
 
-  /* -------------- TAB CONTENT ------------------- */
-  .tab-content { display: none; }
-  .tab-content.active { display: block; }
+  .toast.success {
+    background: #4a7c59;
+  }
 
+  .summary-section {
+    background: var(--ws-light-gold);
+    padding: 20px;
+    margin-top: 20px;
+    border: 1px solid var(--ws-border);
+  }
+
+  .summary-section h3 {
+    margin-top: 0;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+  }
+
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 0.9rem;
+  }
+
+  .summary-row strong {
+    font-weight: 600;
+  }
+
+  .required {
+    color: #c74444;
+  }
 </style>
 </head>
 
@@ -255,145 +349,94 @@
 
 <div class="container">
 
-  <div class="header">Surgery Partners – Patient Services Script</div>
-
-  <div class="tabs">
-    <div class="tab active" data-tab="context">Patient Context</div>
-    <div class="tab" data-tab="workflow">Workflow</div>
-    <div class="tab" data-tab="preferences">Contact Preferences</div>
-    <div class="tab" data-tab="journey">Patient Journey</div>
-    <div class="tab" data-tab="ehr">EHR Viewer</div>
-    <div class="tab" data-tab="pa">Prior Auth Assistant</div>
+  <div class="header">
+    <div class="logo">Williams-Sonoma</div>
+    <div class="subtitle">Delivery Scheduler</div>
   </div>
 
-  <!-- ---------------- TAB: PATIENT CONTEXT ---------------- -->
-  <div id="context" class="tab-content active">
-    <div class="card">
-      <h3>Patient Context</h3>
+  <div class="card">
+    <h2>Customer Information</h2>
 
-      <div class="grid-2">
-        <div><label>Patient Name</label><input id="ptName" readonly></div>
-        <div><label>Date of Birth</label><input id="ptDOB" readonly></div>
-
-        <div><label>Phone Number</label><input id="ptPhone" readonly></div>
-        <div><label>Case / Procedure ID</label><input id="ptCase" readonly></div>
-
-        <div><label>Scheduled Surgery Date</label><input id="ptSurgeryDate" readonly></div>
-        <div><label>Center / Facility</label><input id="ptCenter" readonly></div>
-
-        <div><label>Insurance Plan</label><input id="ptInsurance" readonly></div>
-
-        <div>
-          <label>Patient Responsibility Estimate</label>
-          <input id="ptBalance" readonly />
-
-          <div class="toggle-breakdown" onclick="toggleBreakdown()">
-            ▼ View Cost Breakdown
-          </div>
-
-          <div id="breakdownCard" class="breakdown-card">
-            <div class="breakdown-row"><span>Deductible:</span><span id="deductibleVal">$0</span></div>
-            <div class="breakdown-row"><span>Coinsurance:</span><span id="coinsuranceVal">$0</span></div>
-            <div class="breakdown-row"><span>Copay:</span><span id="copayVal">$0</span></div>
-            <div class="breakdown-divider"></div>
-            <div class="breakdown-row">
-              <strong>Total Estimate:</strong><strong id="totalEstimateVal">$0</strong>
-            </div>
-          </div>
-        </div>
-
+    <div class="grid-2">
+      <div>
+        <label>First Name <span class="required">*</span></label>
+        <input type="text" id="firstName" placeholder="Enter first name" required>
+      </div>
+      <div>
+        <label>Last Name <span class="required">*</span></label>
+        <input type="text" id="lastName" placeholder="Enter last name" required>
       </div>
     </div>
+
+    <label>Delivery Address <span class="required">*</span></label>
+    <input type="text" id="address" placeholder="Enter full delivery address" required>
+
+    <label>Order Number <span class="required">*</span></label>
+    <input type="text" id="orderNumber" placeholder="Enter order number" required>
   </div>
 
-  <!-- ---------------- TAB: WORKFLOW ---------------- -->
-  <div id="workflow" class="tab-content">
-    <div class="card">
-      <h3>Pre-Service Collection Workflow</h3>
+  <div class="card">
+    <h2>Select Delivery Date</h2>
 
-      <div class="check-item"><input type="checkbox">Verify patient identity (DOB + Phone)</div>
-      <div class="check-item"><input type="checkbox">Confirm upcoming procedure & facility</div>
-      <div class="check-item"><input type="checkbox">Review insurance verification status</div>
-      <div class="check-item"><input type="checkbox">Present patient responsibility estimate</div>
-      <div class="check-item"><input type="checkbox">Offer payment options (full, partial, plan)</div>
-      <div class="check-item"><input type="checkbox">Document patient commitment & note in HST</div>
+    <div class="calendar-container">
+      <div class="calendar-header">
+        <button id="prevMonth">‹</button>
+        <div class="calendar-month" id="calendarMonth"></div>
+        <button id="nextMonth">›</button>
+      </div>
 
-      <div class="actions">
-        <button class="btn btn-danger" onclick="toggleSupervisorCard()">Escalate to Supervisor</button>
+      <div class="calendar-grid">
+        <div class="calendar-day-header">Sun</div>
+        <div class="calendar-day-header">Mon</div>
+        <div class="calendar-day-header">Tue</div>
+        <div class="calendar-day-header">Wed</div>
+        <div class="calendar-day-header">Thu</div>
+        <div class="calendar-day-header">Fri</div>
+        <div class="calendar-day-header">Sat</div>
+      </div>
 
-        <div id="supervisorCard" class="supervisor-card">
-          <div class="supervisor-option">Notify Supervisor Immediately</div>
-          <div class="supervisor-option">Request Live Monitoring</div>
-          <div class="supervisor-option">Flag Interaction for Coaching Review</div>
-          <div class="supervisor-option">Transfer Call to Supervisor Queue</div>
-        </div>
+      <div class="calendar-grid" id="calendarDays"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Select Delivery Time</h2>
+
+    <div class="time-slots" id="timeSlots">
+      <div class="time-slot" data-time="8:00 AM - 10:00 AM">8:00 AM - 10:00 AM</div>
+      <div class="time-slot" data-time="10:00 AM - 12:00 PM">10:00 AM - 12:00 PM</div>
+      <div class="time-slot" data-time="12:00 PM - 2:00 PM">12:00 PM - 2:00 PM</div>
+      <div class="time-slot" data-time="2:00 PM - 4:00 PM">2:00 PM - 4:00 PM</div>
+      <div class="time-slot" data-time="4:00 PM - 6:00 PM">4:00 PM - 6:00 PM</div>
+    </div>
+
+    <div class="summary-section" id="summarySection" style="display: none;">
+      <h3>Delivery Summary</h3>
+      <div class="summary-row">
+        <span>Customer:</span>
+        <strong id="summaryName"></strong>
+      </div>
+      <div class="summary-row">
+        <span>Address:</span>
+        <strong id="summaryAddress"></strong>
+      </div>
+      <div class="summary-row">
+        <span>Order Number:</span>
+        <strong id="summaryOrder"></strong>
+      </div>
+      <div class="summary-row">
+        <span>Delivery Date:</span>
+        <strong id="summaryDate"></strong>
+      </div>
+      <div class="summary-row">
+        <span>Time Window:</span>
+        <strong id="summaryTime"></strong>
       </div>
     </div>
-  </div>
 
-  <!-- ---------------- TAB: CONTACT PREFERENCES ---------------- -->
-  <div id="preferences" class="tab-content">
-    <div class="card">
-      <h3>Patient Contact Preferences</h3>
-
-      <div class="check-item"><input type="checkbox" id="prefSMS">SMS</div>
-      <div class="check-item"><input type="checkbox" id="prefEmail">Email</div>
-      <!-- Voice defaults to checked -->
-      <div class="check-item"><input type="checkbox" id="prefVoice" checked>Voice</div>
-      <div class="check-item"><input type="checkbox" id="prefPlan">Enrolled in Pre-Op Payment Plan</div>
-
-      <div class="actions">
-        <button class="btn btn-primary" id="updatePrefsBtn">Update Contact Preferences</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ---------------- TAB: PATIENT JOURNEY ---------------- -->
-  <div id="journey" class="tab-content">
-    <div class="card">
-      <h3>Patient Journey / Contact History</h3>
-
-      <div class="timeline">
-        <div class="event"><div class="date">Dec 9, 2025</div><div class="type">Email</div><div class="summary">Sent pre-op fasting instructions.</div></div>
-        <div class="event"><div class="date">Dec 8, 2025</div><div class="type">SMS</div><div class="summary">Reminder sent.</div></div>
-        <div class="event"><div class="date">Dec 7, 2025</div><div class="type">Inbound Call</div><div class="summary">Collected $150 & reviewed prep checklist.</div></div>
-        <div class="event"><div class="date">Dec 5, 2025</div><div class="type">Outbound Call</div><div class="summary">Insurance verified & surgery confirmed.</div></div>
-        <div class="event"><div class="date">Dec 3, 2025</div><div class="type">Outbound Call</div><div class="summary">No answer. Voicemail left.</div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ---------------- TAB: EHR VIEWER ---------------- -->
-  <div id="ehr" class="tab-content">
-    <div class="card">
-      <h3>Mini EHR Viewer (Read-Only)</h3>
-
-      <table class="ehr-table">
-        <tr><td><strong>Primary Diagnosis:</strong></td><td>Cholelithiasis (K80.20)</td></tr>
-        <tr><td><strong>Procedure:</strong></td><td>Laparoscopic Cholecystectomy</td></tr>
-        <tr><td><strong>Allergies:</strong></td><td>Penicillin, Latex</td></tr>
-        <tr><td><strong>Medications:</strong></td><td>Metformin 500mg, Atorvastatin 20mg</td></tr>
-        <tr><td><strong>Past Procedures:</strong></td><td>Colonoscopy – 2022</td></tr>
-        <tr><td><strong>Pre-Op Clearance:</strong></td><td>Completed – PCP (11/28/25)</td></tr>
-        <tr><td><strong>Primary Care Provider:</strong></td><td>Dr. Susan Miller</td></tr>
-      </table>
-
-    </div>
-  </div>
-
-  <!-- ---------------- TAB: PRIOR AUTH ---------------- -->
-  <div id="pa" class="tab-content">
-    <div class="card">
-      <h3>Prior Authorization Assistant</h3>
-
-      <table class="ehr-table">
-        <tr><td><strong>PA Status:</strong></td><td>Approved</td></tr>
-        <tr><td><strong>Payer:</strong></td><td>BlueCross PPO</td></tr>
-        <tr><td><strong>Approval #:</strong></td><td>PA-9822341</td></tr>
-        <tr><td><strong>Valid Through:</strong></td><td>02/15/2026</td></tr>
-        <tr><td><strong>Required Docs:</strong></td><td>DX code, imaging results, surgeon notes</td></tr>
-      </table>
-
+    <div class="btn-container">
+      <button class="btn btn-secondary" id="clearBtn">Clear Form</button>
+      <button class="btn btn-primary" id="scheduleBtn" disabled>Schedule Delivery</button>
     </div>
   </div>
 
@@ -401,21 +444,7 @@
 
 <!-- ------------------------ SCRIPT ------------------------- -->
 <script>
-  /* ----- Tabs ----- */
-  const tabs = document.querySelectorAll(".tab");
-  const contents = document.querySelectorAll(".tab-content");
-
-  tabs.forEach(tab => {
-    tab.addEventListener("click", () => {
-      tabs.forEach(t => t.classList.remove("active"));
-      tab.classList.add("active");
-
-      contents.forEach(c => c.classList.remove("active"));
-      document.getElementById(tab.dataset.tab).classList.add("active");
-    });
-  });
-
-  /* ----- Dual-Case Query Params ----- */
+  // Get query parameters for pre-filling
   const qp = new URLSearchParams(window.location.search);
 
   function getQP(...keys) {
@@ -426,77 +455,164 @@
     return "";
   }
 
-  function cleanPhone(input="") {
-    return input.replace(/[\[\]\(\)]/g,"").trim();
-  }
+  // Pre-fill fields from query parameters
+  document.getElementById("firstName").value = getQP("firstName", "firstname", "fname", "FNAME");
+  document.getElementById("lastName").value = getQP("lastName", "lastname", "lname", "LNAME");
+  document.getElementById("address").value = getQP("address", "Address", "deliveryAddress");
+  document.getElementById("orderNumber").value = getQP("orderNumber", "ordernumber", "order", "ORDER");
 
-  /* ----- Defaults ----- */
-  const defaults = {
-    ptDOB: "1984-07-22",
-    ptCase: "PROC-447821",
-    ptSurgeryDate: "2025-12-19",
-    ptCenter: "NovaMed Surgery Center of Madison",
-    ptInsurance: "BlueCross PPO"
-  };
+  // Calendar functionality
+  let currentDate = new Date();
+  let selectedDate = null;
+  let selectedTime = null;
 
-  function setField(id, val) {
-    const el = document.getElementById(id);
-    if (el) el.value = val;
-  }
+  const monthNames = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
 
-  /* ----- Field Mapping ----- */
-  setField("ptName",
-    getQP("name","Name","FNAME","fname") + " " +
-    getQP("LNAME","lname","last","LastName")
-  );
-  setField("ptDOB", getQP("dob","DOB","BirthDate") || defaults.ptDOB);
-  setField("ptPhone", cleanPhone(getQP("phone","PHONE","Mobile","ContactNumber")));
-  setField("ptCase", getQP("service","CASEID","AccountPatientOrMemberID") || defaults.ptCase);
-  setField("ptSurgeryDate", getQP("surgerydate","SURGERYDATE") || defaults.ptSurgeryDate);
-  setField("ptCenter", getQP("center","CENTER","facility") || defaults.ptCenter);
-  setField("ptInsurance", getQP("insurance","INSURANCE","plan") || defaults.ptInsurance);
+  function renderCalendar() {
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+    
+    document.getElementById("calendarMonth").textContent = 
+      `${monthNames[month]} ${year}`;
 
-  /* ----- Fixed Cost Calculator (always $750) ----- */
-  const deductible = 300;
-  const coinsurance = 350;
-  const copay = 100;
-  const total = 750;
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const daysInPrevMonth = new Date(year, month, 0).getDate();
+    
+    const calendarDays = document.getElementById("calendarDays");
+    calendarDays.innerHTML = "";
 
-  document.getElementById("ptBalance").value = "$" + total.toFixed(2);
-  document.getElementById("deductibleVal").innerText = "$" + deductible.toFixed(2);
-  document.getElementById("coinsuranceVal").innerText = "$" + coinsurance.toFixed(2);
-  document.getElementById("copayVal").innerText = "$" + copay.toFixed(2);
-  document.getElementById("totalEstimateVal").innerText = "$" + total.toFixed(2);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
-  /* ----- Cost Breakdown Toggle ----- */
-  function toggleBreakdown() {
-    const card = document.getElementById("breakdownCard");
-    const label = document.querySelector(".toggle-breakdown");
+    // Previous month days
+    for (let i = firstDay - 1; i >= 0; i--) {
+      const day = daysInPrevMonth - i;
+      const dayEl = document.createElement("div");
+      dayEl.className = "calendar-day other-month";
+      dayEl.textContent = day;
+      calendarDays.appendChild(dayEl);
+    }
 
-    if (card.style.display === "none" || card.style.display === "") {
-      card.style.display = "block";
-      label.innerText = "▲ Hide Cost Breakdown";
-    } else {
-      card.style.display = "none";
-      label.innerText = "▼ View Cost Breakdown";
+    // Current month days
+    for (let day = 1; day <= daysInMonth; day++) {
+      const dayEl = document.createElement("div");
+      dayEl.className = "calendar-day";
+      dayEl.textContent = day;
+
+      const currentDay = new Date(year, month, day);
+      currentDay.setHours(0, 0, 0, 0);
+
+      // Disable past dates
+      if (currentDay < today) {
+        dayEl.classList.add("disabled");
+      }
+
+      // Mark today
+      if (currentDay.getTime() === today.getTime()) {
+        dayEl.classList.add("today");
+      }
+
+      // Mark selected date
+      if (selectedDate && 
+          selectedDate.getDate() === day && 
+          selectedDate.getMonth() === month && 
+          selectedDate.getFullYear() === year) {
+        dayEl.classList.add("selected");
+      }
+
+      dayEl.addEventListener("click", function() {
+        if (!this.classList.contains("disabled")) {
+          selectedDate = new Date(year, month, day);
+          renderCalendar();
+          updateSummary();
+          checkFormComplete();
+        }
+      });
+
+      calendarDays.appendChild(dayEl);
+    }
+
+    // Next month days to fill grid
+    const totalCells = calendarDays.children.length;
+    const remainingCells = 42 - totalCells; // 6 rows * 7 days
+    for (let day = 1; day <= remainingCells; day++) {
+      const dayEl = document.createElement("div");
+      dayEl.className = "calendar-day other-month";
+      dayEl.textContent = day;
+      calendarDays.appendChild(dayEl);
     }
   }
-  window.toggleBreakdown = toggleBreakdown;
 
-  /* ----- Supervisor Action Card Toggle ----- */
-  function toggleSupervisorCard() {
-    const card = document.getElementById("supervisorCard");
-    card.style.display = (card.style.display === "block") ? "none" : "block";
+  document.getElementById("prevMonth").addEventListener("click", function() {
+    currentDate.setMonth(currentDate.getMonth() - 1);
+    renderCalendar();
+  });
+
+  document.getElementById("nextMonth").addEventListener("click", function() {
+    currentDate.setMonth(currentDate.getMonth() + 1);
+    renderCalendar();
+  });
+
+  // Time slot selection
+  const timeSlots = document.querySelectorAll(".time-slot");
+  timeSlots.forEach(slot => {
+    slot.addEventListener("click", function() {
+      timeSlots.forEach(s => s.classList.remove("selected"));
+      this.classList.add("selected");
+      selectedTime = this.dataset.time;
+      updateSummary();
+      checkFormComplete();
+    });
+  });
+
+  // Form validation
+  function checkFormComplete() {
+    const firstName = document.getElementById("firstName").value.trim();
+    const lastName = document.getElementById("lastName").value.trim();
+    const address = document.getElementById("address").value.trim();
+    const orderNumber = document.getElementById("orderNumber").value.trim();
+
+    const isComplete = firstName && lastName && address && orderNumber && 
+                      selectedDate && selectedTime;
+
+    document.getElementById("scheduleBtn").disabled = !isComplete;
   }
-  window.toggleSupervisorCard = toggleSupervisorCard;
 
-  /* ----- Toast System ----- */
-  function showToast(text) {
+  // Update summary
+  function updateSummary() {
+    if (selectedDate && selectedTime) {
+      document.getElementById("summarySection").style.display = "block";
+      document.getElementById("summaryName").textContent = 
+        `${document.getElementById("firstName").value} ${document.getElementById("lastName").value}`;
+      document.getElementById("summaryAddress").textContent = 
+        document.getElementById("address").value;
+      document.getElementById("summaryOrder").textContent = 
+        document.getElementById("orderNumber").value;
+      document.getElementById("summaryDate").textContent = 
+        selectedDate.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+      document.getElementById("summaryTime").textContent = selectedTime;
+    }
+  }
+
+  // Input validation
+  ["firstName", "lastName", "address", "orderNumber"].forEach(id => {
+    document.getElementById(id).addEventListener("input", function() {
+      checkFormComplete();
+      if (selectedDate && selectedTime) {
+        updateSummary();
+      }
+    });
+  });
+
+  // Toast system
+  function showToast(text, success = false) {
     const container = document.getElementById("toastContainer");
-
     const toast = document.createElement("div");
-    toast.className = "toast";
-    toast.innerText = text + " ✓";
+    toast.className = "toast" + (success ? " success" : "");
+    toast.innerText = text;
 
     container.appendChild(toast);
 
@@ -507,35 +623,54 @@
     }, 3000);
   }
 
-  /* ----- Supervisor Option Clicks ----- */
-  document.querySelectorAll(".supervisor-option").forEach(option => {
-    option.addEventListener("click", () => {
-      const msg = option.innerText.trim();
-      document.getElementById("supervisorCard").style.display = "none";
-      showToast(msg);
-    });
+  // Schedule button
+  document.getElementById("scheduleBtn").addEventListener("click", function() {
+    const deliveryData = {
+      firstName: document.getElementById("firstName").value,
+      lastName: document.getElementById("lastName").value,
+      address: document.getElementById("address").value,
+      orderNumber: document.getElementById("orderNumber").value,
+      deliveryDate: selectedDate.toISOString().split('T')[0],
+      deliveryTime: selectedTime
+    };
+
+    console.log("Delivery Scheduled:", deliveryData);
+    
+    // This is where you would integrate with Genesys Cloud API
+    // Example: window.parent.postMessage(deliveryData, '*');
+    
+    showToast("✓ Delivery successfully scheduled!", true);
+    
+    // Optional: Clear form after 2 seconds
+    setTimeout(() => {
+      clearForm();
+    }, 2000);
   });
 
-  /* ----- Update Contact Preferences button ----- */
-  const updatePrefsBtn = document.getElementById("updatePrefsBtn");
-  if (updatePrefsBtn) {
-    updatePrefsBtn.addEventListener("click", () => {
-      showToast("Contact preferences updated");
-    });
+  // Clear button
+  document.getElementById("clearBtn").addEventListener("click", function() {
+    clearForm();
+    showToast("Form cleared");
+  });
+
+  function clearForm() {
+    document.getElementById("firstName").value = "";
+    document.getElementById("lastName").value = "";
+    document.getElementById("address").value = "";
+    document.getElementById("orderNumber").value = "";
+    
+    selectedDate = null;
+    selectedTime = null;
+    
+    timeSlots.forEach(s => s.classList.remove("selected"));
+    renderCalendar();
+    
+    document.getElementById("summarySection").style.display = "none";
+    document.getElementById("scheduleBtn").disabled = true;
   }
 
-  /* ----- Theme Overrides from Architect ----- */
-  const buttonColor = getQP("buttonColor","ButtonColor");
-  const bgColor = getQP("bgColor","PageBackgroundColor");
-  const headerColor = getQP("headerColor","HeaderColor");
-
-  if (bgColor) document.body.style.backgroundColor = bgColor;
-  if (headerColor) document.querySelector(".header").style.backgroundColor = headerColor;
-  if (buttonColor) {
-    document.querySelectorAll(".btn-primary").forEach(btn => {
-      btn.style.backgroundColor = buttonColor;
-    });
-  }
+  // Initialize calendar
+  renderCalendar();
 </script>
 
 </body>
