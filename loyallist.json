@@ -1,0 +1,40 @@
+{
+  "success": true,
+  "account": {
+    "customer_name": "Sara Mitchell",
+    "member_since": "2019",
+    "tier": "Gold",
+    "points_balance": 2400,
+    "points_pending": 695,
+    "points_pending_source": "Order BLM-8842917 — Veronica Beard Dickey Jacket",
+    "points_available_after": "3 days after delivery",
+    "next_tier": "Platinum",
+    "points_to_next_tier": 600,
+    "tier_message": "Sara is 600 points away from Platinum status.",
+    "rewards": [
+      {
+        "reward_id": "RWD-001",
+        "name": "$25 Loyallist Reward",
+        "points_required": 500,
+        "available": true
+      },
+      {
+        "reward_id": "RWD-002",
+        "name": "$50 Loyallist Reward",
+        "points_required": 1000,
+        "available": true
+      },
+      {
+        "reward_id": "RWD-003",
+        "name": "$100 Loyallist Reward",
+        "points_required": 2000,
+        "available": true
+      }
+    ],
+    "expiration": {
+      "points_expiring": 0,
+      "expiration_date": null,
+      "message": "No points expiring in the next 90 days."
+    }
+  }
+}
