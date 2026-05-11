@@ -5,23 +5,26 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Stratatech Inbound Advisor Script</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
+    --red: #D94F4F;
+    --red-dim: rgba(217, 79, 79, 0.15);
     --steel: #1C2B3A;
     --steel-mid: #243447;
     --steel-light: #2E4057;
-    --orange: #F4600C;
-    --orange-bright: #FF7A2F;
-    --amber: #F5A623;
     --cream: #F2EDE4;
-    --white: #FFFFFF;
-    --gray-light: #E8E4DC;
+    --white: #ffffff;
     --gray-mid: #9BA8B0;
-    --success: #2ECC71;
-    --spark: #FFD166;
-    --veteran: #4A90D9;
-    --veteran-dark: #2C6FAC;
+    --gray-light: #6B7C8A;
+    --success: #4BAF82;
+    --success-dim: rgba(75,175,130,0.12);
+    --amber: #D4943A;
+    --amber-dim: rgba(212,148,58,0.12);
+    --veteran: #5B9BD5;
+    --veteran-dim: rgba(91,155,213,0.12);
+    --spark: #F0C840;
+    --border: #2E4057;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -31,132 +34,65 @@
     background: var(--steel);
     color: var(--cream);
     min-height: 100vh;
-    font-size: 14px;
+    font-size: 15px;
   }
 
+  /* HEADER */
   .header {
     background: var(--steel-mid);
-    border-bottom: 3px solid var(--orange);
-    padding: 12px 20px;
+    border-bottom: 3px solid var(--red);
+    padding: 10px 24px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     position: sticky;
     top: 0;
     z-index: 100;
-  }
-
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .logo-icon {
-    width: 36px;
-    height: 36px;
-    background: var(--orange);
-    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 800;
-    font-size: 14px;
-    color: white;
-  }
-
-  .logo-text {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 800;
-    font-size: 20px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--white);
-  }
-
-  .logo-text span { color: var(--orange); }
-
-  .header-right {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .header-badge {
-    background: var(--success);
-    color: #0a2a1a;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 11px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    padding: 4px 10px;
-    border-radius: 2px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
   }
 
   .inbound-tag {
     background: var(--steel-light);
     color: var(--gray-mid);
     font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 11px;
     letter-spacing: 1.5px;
     text-transform: uppercase;
     padding: 4px 10px;
-    border-radius: 2px;
+    border-radius: 3px;
   }
 
-  /* Screen Pop Banner */
-  .screen-pop {
-    background: linear-gradient(135deg, #1a3a52 0%, #1e3347 100%);
-    border-bottom: 2px solid var(--veteran);
-    padding: 12px 20px;
+  .header-logo img {
+    height: 44px;
+    width: auto;
+    display: block;
+    filter: brightness(0) invert(1);
+  }
+
+  /* STUDENT BAR */
+  .student-bar {
+    background: var(--steel-mid);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 24px;
     display: flex;
     align-items: center;
     gap: 20px;
     flex-wrap: wrap;
   }
 
-  .screen-pop-label {
+  .student-bar-label {
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: 700;
     font-size: 10px;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: var(--veteran);
+    color: var(--gray-mid);
     white-space: nowrap;
-    display: flex;
-    align-items: center;
-    gap: 6px;
   }
 
-  .screen-pop-label::before {
-    content: '';
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--success);
-    animation: pulse 1.5s infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
-
-  .pop-fields {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-    flex: 1;
-  }
-
-  .pop-field {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
+  .pop-fields { display: flex; gap: 20px; flex-wrap: wrap; flex: 1; }
+  .pop-field { display: flex; flex-direction: column; gap: 1px; }
 
   .pop-field-label {
     font-size: 9px;
@@ -170,148 +106,115 @@
   .pop-field-value {
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: 700;
-    font-size: 14px;
-    color: var(--cream);
+    font-size: 15px;
+    color: #ffffff;
   }
 
+  .pop-field-value { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 15px; color: var(--cream); }
   .pop-field-value.highlight { color: var(--spark); }
 
-  /* Tab Nav */
+  /* TABS */
   .tab-nav {
     background: var(--steel-mid);
-    padding: 0 20px;
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
     display: flex;
-    gap: 2px;
     overflow-x: auto;
-    border-bottom: 1px solid var(--steel-light);
   }
 
   .tab-nav::-webkit-scrollbar { height: 3px; }
-  .tab-nav::-webkit-scrollbar-track { background: var(--steel-mid); }
-  .tab-nav::-webkit-scrollbar-thumb { background: var(--orange); }
+  .tab-nav::-webkit-scrollbar-thumb { background: var(--red); }
 
   .tab-btn {
     background: none;
     border: none;
+    border-bottom: 3px solid transparent;
     color: var(--gray-mid);
     font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 600;
-    font-size: 13px;
-    letter-spacing: 1px;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.5px;
     text-transform: uppercase;
-    padding: 12px 16px;
+    padding: 13px 18px;
     cursor: pointer;
     white-space: nowrap;
-    border-bottom: 3px solid transparent;
     margin-bottom: -1px;
     transition: all 0.2s;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 7px;
   }
 
   .tab-btn:hover { color: var(--cream); }
-  .tab-btn.active { color: var(--orange); border-bottom-color: var(--orange); }
+  .tab-btn.active { color: var(--red); border-bottom-color: var(--red); }
 
   .tab-num {
     background: var(--steel-light);
     color: var(--gray-mid);
     font-size: 10px;
-    width: 18px;
-    height: 18px;
+    width: 19px; height: 19px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-weight: 700;
   }
 
-  .tab-btn.active .tab-num { background: var(--orange); color: white; }
+  .tab-btn.active .tab-num { background: var(--red); color: white; }
 
-  /* Content */
-  .content {
-    padding: 20px;
-    max-width: 900px;
-    margin: 0 auto;
-  }
+  /* PROGRESS */
+  .progress-wrap { background: var(--steel-light); height: 4px; overflow: hidden; }
+  .progress-bar { height: 100%; background: var(--red); transition: width 0.4s ease; }
 
+  /* CONTENT */
+  .content { padding: 24px; max-width: 860px; margin: 0 auto; }
   .tab-panel { display: none; }
   .tab-panel.active { display: block; }
 
-  /* Progress */
-  .progress-wrap {
-    background: var(--steel-light);
-    height: 4px;
-    border-radius: 2px;
-    margin-bottom: 20px;
-    overflow: hidden;
-  }
-
-  .progress-bar {
-    height: 100%;
-    background: var(--orange);
-    border-radius: 2px;
-    transition: width 0.4s ease;
-  }
-
-  /* Section */
-  .section { margin-bottom: 20px; }
+  /* SECTION */
+  .section { margin-bottom: 22px; }
 
   .section-label {
     font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
+    font-weight: 800;
     font-size: 11px;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: var(--orange);
-    margin-bottom: 8px;
+    color: var(--red);
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
     gap: 8px;
   }
 
-  .section-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--steel-light);
-  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .section-label.blue { color: var(--veteran); }
+  .section-label.green { color: var(--success); }
 
-  .section-label.veteran { color: var(--veteran); }
-  .section-label.veteran::after { background: var(--steel-light); }
-
-  /* Script boxes */
+  /* SCRIPT BOXES */
   .script-box {
     background: var(--steel-mid);
-    border-left: 4px solid var(--orange);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--red);
     padding: 14px 16px;
-    border-radius: 0 4px 4px 0;
+    border-radius: 0 6px 6px 0;
     margin-bottom: 12px;
-    line-height: 1.65;
-    font-size: 14px;
+    line-height: 1.7;
+    font-size: 15px;
     color: var(--cream);
   }
 
-  .script-box.alt { border-left-color: var(--amber); }
-  .script-box.tip {
-    border-left-color: var(--success);
-    background: rgba(46, 204, 113, 0.08);
-  }
-  .script-box.veteran {
-    border-left-color: var(--veteran);
-    background: rgba(74, 144, 217, 0.08);
-  }
-  .script-box.visit {
-    border-left-color: var(--spark);
-    background: rgba(245, 209, 102, 0.06);
-  }
+  .script-box.alt { border-left-color: var(--amber); background: var(--amber-dim); border-color: var(--border); }
+  .script-box.tip { border-left-color: var(--success); background: var(--success-dim); border-color: var(--border); }
+  .script-box.veteran { border-left-color: var(--veteran); background: var(--veteran-dim); border-color: var(--border); }
 
   .script-tag {
     font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
+    font-weight: 800;
     font-size: 10px;
-    letter-spacing: 1.5px;
+    letter-spacing: 2px;
     text-transform: uppercase;
-    color: var(--orange);
+    color: var(--red);
     margin-bottom: 5px;
     display: block;
   }
@@ -319,77 +222,145 @@
   .script-tag.alt { color: var(--amber); }
   .script-tag.tip { color: var(--success); }
   .script-tag.veteran { color: var(--veteran); }
-  .script-tag.visit { color: var(--spark); }
+  .script-box em { color: var(--spark); font-style: normal; font-weight: 600; }
 
-  .script-box em {
-    color: var(--spark);
-    font-style: normal;
-    font-weight: 600;
-  }
-
-  /* Veteran Banner */
-  .veteran-banner {
-    background: linear-gradient(135deg, rgba(74,144,217,0.15) 0%, rgba(44,111,172,0.1) 100%);
-    border: 1px solid var(--veteran);
-    border-radius: 4px;
-    padding: 14px 16px;
-    margin-bottom: 16px;
+  /* ALERT */
+  .alert {
+    background: rgba(212,148,58,0.12);
+    border: 1px solid var(--amber);
+    border-radius: 6px;
+    padding: 11px 14px;
+    font-size: 14px;
+    color: var(--cream);
+    margin-bottom: 14px;
     display: flex;
+    gap: 10px;
     align-items: flex-start;
-    gap: 12px;
+    line-height: 1.55;
   }
 
-  .veteran-icon {
-    font-size: 24px;
-    flex-shrink: 0;
-    margin-top: 2px;
+  .alert-icon { font-size: 16px; flex-shrink: 0; }
+
+  /* CONFIRM BOX */
+  .confirm-box {
+    background: var(--steel-mid);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 14px;
   }
 
-  .veteran-banner-text h4 {
+  .confirm-row {
+    display: flex;
+    align-items: center;
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--border);
+    font-size: 15px;
+  }
+
+  .confirm-row:last-child { border-bottom: none; }
+
+  .confirm-key {
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 11px;
     letter-spacing: 1px;
     text-transform: uppercase;
-    color: var(--veteran);
-    margin-bottom: 4px;
+    color: var(--gray-mid);
+    width: 160px;
+    flex-shrink: 0;
   }
 
-  .veteran-banner-text p {
-    font-size: 13px;
+  .confirm-val.editable {
+    background: transparent;
+    border: none;
+    border-bottom: 1px dashed var(--steel-light);
     color: var(--cream);
-    line-height: 1.5;
+    font-family: 'Barlow', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    outline: none;
+    flex: 1;
+    padding: 1px 4px;
+    transition: border-color 0.2s;
   }
 
-  /* Toggle Switch */
+  .confirm-val.editable:focus { border-bottom-color: var(--red); }
+  select.confirm-val.editable option { background: var(--steel-mid); color: var(--cream); }
+
+  /* DEPTH ITEMS */
+  .depth-item {
+    background: var(--steel-mid);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+
+  .depth-q {
+    padding: 13px 16px;
+    font-size: 15px;
+    color: var(--cream);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    user-select: none;
+  }
+
+  .depth-q:hover { background: var(--steel-light); }
+
+  .depth-purpose {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--amber);
+    background: var(--amber-dim);
+    padding: 2px 8px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+
+  .depth-chevron { font-size: 10px; color: var(--gray-mid); transition: transform 0.2s; flex-shrink: 0; }
+
+  .depth-note {
+    display: none;
+    padding: 11px 16px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--gray-mid);
+    line-height: 1.6;
+    background: var(--steel);
+    font-style: italic;
+  }
+
+  .depth-item.open .depth-note { display: block; }
+  .depth-item.open .depth-chevron { transform: rotate(180deg); }
+
+  /* TOGGLE */
   .toggle-row {
     display: flex;
     align-items: center;
     gap: 12px;
     margin-bottom: 16px;
-    padding: 12px 14px;
+    padding: 13px 16px;
     background: var(--steel-mid);
-    border-radius: 4px;
-    border: 1px solid var(--steel-light);
+    border-radius: 6px;
+    border: 1px solid var(--border);
   }
 
   .toggle-label {
     font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 600;
-    font-size: 13px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 15px;
     color: var(--cream);
     flex: 1;
   }
 
-  .toggle {
-    position: relative;
-    width: 44px;
-    height: 24px;
-    flex-shrink: 0;
-  }
-
+  .toggle { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
   .toggle input { opacity: 0; width: 0; height: 0; }
 
   .toggle-slider {
@@ -404,25 +375,46 @@
   .toggle-slider:before {
     content: '';
     position: absolute;
-    height: 18px;
-    width: 18px;
-    left: 3px;
-    bottom: 3px;
+    height: 18px; width: 18px;
+    left: 3px; bottom: 3px;
     background: var(--gray-mid);
     border-radius: 50%;
     transition: 0.3s;
   }
 
   .toggle input:checked + .toggle-slider { background: var(--veteran); }
-  .toggle input:checked + .toggle-slider:before {
-    transform: translateX(20px);
-    background: white;
-  }
+  .toggle input:checked + .toggle-slider:before { transform: translateX(20px); background: white; }
 
   .veteran-section { display: none; }
   .veteran-section.visible { display: block; }
 
-  /* Info Cards */
+  /* VETERAN BANNER */
+  .veteran-banner {
+    background: var(--veteran-dim);
+    border: 1px solid var(--veteran);
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .veteran-icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+
+  .veteran-banner-text h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--veteran);
+    margin-bottom: 4px;
+  }
+
+  .veteran-banner-text p { font-size: 14px; color: var(--cream); line-height: 1.5; }
+
+  /* INFO CARDS */
   .card-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -432,47 +424,43 @@
 
   .info-card {
     background: var(--steel-mid);
-    border: 1px solid var(--steel-light);
-    border-radius: 4px;
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--veteran);
+    border-radius: 0 0 6px 6px;
     padding: 12px;
   }
 
   .info-card-title {
     font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 11px;
+    font-weight: 800;
+    font-size: 12px;
     letter-spacing: 1px;
     text-transform: uppercase;
     color: var(--veteran);
-    margin-bottom: 4px;
+    margin-bottom: 5px;
   }
 
-  .info-card-body {
-    font-size: 13px;
-    color: var(--cream);
-    line-height: 1.5;
-  }
+  .info-card-body { font-size: 13px; color: var(--cream); line-height: 1.5; }
 
-  /* Checklist */
+  /* CHECKLIST */
   .checklist { list-style: none; margin-bottom: 16px; }
 
   .checklist li {
     display: flex;
     align-items: flex-start;
     gap: 10px;
-    padding: 8px 0;
-    border-bottom: 1px solid var(--steel-light);
-    font-size: 13.5px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 15px;
     line-height: 1.5;
   }
 
   .checklist li:last-child { border-bottom: none; }
 
   .check-box {
-    width: 18px;
-    height: 18px;
+    width: 19px; height: 19px;
     border: 2px solid var(--steel-light);
-    border-radius: 3px;
+    border-radius: 4px;
     cursor: pointer;
     flex-shrink: 0;
     margin-top: 1px;
@@ -483,73 +471,71 @@
     background: var(--steel);
   }
 
-  .check-box.checked { background: var(--orange); border-color: var(--orange); }
+  .check-box.checked { background: var(--red); border-color: var(--red); }
   .check-box.checked::after { content: '✓'; color: white; font-size: 11px; font-weight: bold; }
   .check-label { cursor: pointer; }
   .check-label.checked { text-decoration: line-through; color: var(--gray-mid); }
 
-  /* Visit Scheduler */
+  /* VISIT CARD */
   .visit-card {
     background: var(--steel-mid);
-    border: 1px solid var(--steel-light);
-    border-radius: 4px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
     padding: 16px;
     margin-bottom: 14px;
   }
 
   .visit-card-title {
     font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
+    font-weight: 800;
     font-size: 13px;
     letter-spacing: 1.5px;
     text-transform: uppercase;
     color: var(--spark);
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    margin-bottom: 14px;
   }
 
+  /* FORM */
   .row { display: flex; gap: 12px; }
   .col { flex: 1; }
 
   .mini-label {
     font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 11px;
     letter-spacing: 1.5px;
     text-transform: uppercase;
     color: var(--gray-mid);
-    margin-bottom: 6px;
+    margin-bottom: 5px;
     display: block;
   }
 
   .field-input {
     width: 100%;
     background: var(--steel);
-    border: 1px solid var(--steel-light);
-    border-radius: 3px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
     color: var(--cream);
     font-family: 'Barlow', sans-serif;
-    font-size: 13px;
+    font-size: 15px;
     padding: 8px 10px;
     outline: none;
     transition: border-color 0.2s;
     margin-bottom: 10px;
   }
 
-  .field-input:focus { border-color: var(--orange); }
-  select.field-input option { background: var(--steel-mid); }
+  .field-input:focus { border-color: var(--red); }
+  select.field-input option { background: var(--steel-mid); color: var(--cream); }
 
-  /* Notes */
+  /* NOTES */
   .notes-area {
     width: 100%;
     background: var(--steel-mid);
-    border: 1px solid var(--steel-light);
-    border-radius: 4px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
     color: var(--cream);
     font-family: 'Barlow', sans-serif;
-    font-size: 13px;
+    font-size: 15px;
     padding: 12px;
     resize: vertical;
     min-height: 80px;
@@ -557,193 +543,55 @@
     transition: border-color 0.2s;
   }
 
-  .notes-area:focus { border-color: var(--orange); }
+  .notes-area:focus { border-color: var(--red); }
   .notes-area::placeholder { color: var(--gray-mid); }
 
-  /* Alert */
-  .alert {
-    background: rgba(244, 96, 12, 0.1);
-    border: 1px solid var(--orange);
-    border-radius: 4px;
-    padding: 10px 14px;
-    font-size: 13px;
-    color: var(--cream);
-    margin-bottom: 14px;
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
-  }
-
-  .alert.veteran-alert {
-    background: rgba(74, 144, 217, 0.1);
-    border-color: var(--veteran);
-  }
-
-  .alert-icon { font-size: 16px; flex-shrink: 0; }
-
-  /* Depth question accordion */
-  .depth-item {
-    background: var(--steel-mid);
-    border: 1px solid var(--steel-light);
-    border-radius: 4px;
-    margin-bottom: 10px;
-    overflow: hidden;
-  }
-
-  .depth-q {
-    padding: 12px 16px;
-    font-size: 13.5px;
-    color: var(--cream);
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    user-select: none;
-    gap: 12px;
-  }
-
-  .depth-q:hover { background: var(--steel-light); }
-
-  .depth-purpose {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 600;
-    font-size: 10px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--amber);
-    white-space: nowrap;
-  }
-
-  .depth-chevron { font-size: 10px; color: var(--gray-mid); transition: transform 0.2s; flex-shrink: 0; }
-
-  .depth-note {
-    display: none;
-    padding: 10px 16px;
-    border-top: 1px solid var(--steel-light);
-    font-size: 13px;
-    color: var(--gray-mid);
-    line-height: 1.6;
-    font-style: italic;
-  }
-
-  .depth-item.open .depth-note { display: block; }
-  .depth-item.open .depth-chevron { transform: rotate(180deg); }
-
-  /* CTA buttons */
+  /* BUTTONS */
   .cta-btn {
-    background: var(--orange);
+    background: var(--red);
     color: white;
     border: none;
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: 700;
-    font-size: 13px;
+    font-size: 14px;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    padding: 10px 20px;
-    border-radius: 3px;
+    padding: 10px 22px;
+    border-radius: 4px;
     cursor: pointer;
     transition: background 0.2s;
     margin-top: 8px;
   }
 
-  .cta-btn:hover { background: var(--orange-bright); }
-  .cta-btn.secondary { background: var(--steel-light); color: var(--cream); }
-  .cta-btn.secondary:hover { background: #3a5068; }
-  .cta-btn.veteran-btn { background: var(--veteran); }
-  .cta-btn.veteran-btn:hover { background: #5aa0e8; }
+  .cta-btn:hover { background: #c46060; }
 
-  /* Confirm box */
-  .confirm-box {
-    background: var(--steel-mid);
-    border: 1px solid var(--steel-light);
-    border-radius: 4px;
-    padding: 14px 16px;
-    margin-bottom: 14px;
-  }
-
-  .confirm-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 6px 0;
-    border-bottom: 1px solid var(--steel-light);
-    font-size: 13px;
-  }
-
-  .confirm-row:last-child { border-bottom: none; }
-
-  .confirm-key {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 600;
-    font-size: 11px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--gray-mid);
-    width: 140px;
-    flex-shrink: 0;
-  }
-
-  .confirm-val {
+  .cta-btn.secondary {
+    background: var(--steel-light);
     color: var(--cream);
-    font-weight: 500;
+    border: 1px solid var(--border);
   }
 
-  .confirm-val.editable {
-    background: transparent;
-    border: none;
-    border-bottom: 1px dashed var(--steel-light);
-    color: var(--cream);
-    font-family: 'Barlow', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    outline: none;
-    flex: 1;
-    padding: 0 4px;
-    transition: border-color 0.2s;
-  }
-
-  .confirm-val.editable:focus { border-bottom-color: var(--orange); }
+  .cta-btn.secondary:hover { background: #3a5068; color: var(--cream); }
 </style>
 </head>
 <body>
 
 <div class="header">
-  <div class="logo">
-    <div class="logo-icon">ST</div>
-    <div class="logo-text">STRATA<span>TECH</span></div>
-  </div>
-  <div class="header-right">
-    <div class="inbound-tag">Inbound Transfer</div>
+  <div class="inbound-tag">Inbound Transfer</div>
+  <div class="header-logo">
+    <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDI3LjEuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCAyMzkgOTcuNiIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMjM5IDk3LjY7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4KCS5zdDB7ZmlsbDojMjMyMDIwO30KCS5zdDF7ZmlsbDojQjAxRjI0O30KPC9zdHlsZT4KPHBhdGggY2xhc3M9InN0MCIgZD0iTTkzLjIsODAuNnYxMi42SDQuNFY0LjRoODguOFYxN2g0LjRWMEgwdjk3LjZoOTcuNnYtMTdIOTMuMnoiLz4KPHBhdGggY2xhc3M9InN0MSIgZD0iTTM0LjgsNjIuNnYwLjhoLTIuNHYzaDIuOXYwLjloLTR2LTguNGg0djAuOWgtMi45djIuOUwzNC44LDYyLjZMMzQuOCw2Mi42eiIvPgo8cGF0aCBjbGFzcz0ic3QxIiBkPSJNNDguMiw1OC45YzEuNSwwLDIuMiwwLjgsMi4yLDIuMXY0LjJjMCwxLjMtMC43LDIuMS0yLjIsMi4xaC0yLjN2LTguNEw0OC4yLDU4LjlMNDguMiw1OC45eiBNNDguMiw2Ni40CgljMC44LDAsMS4xLTAuNCwxLjEtMS4ydi00LjNjMC0wLjgtMC40LTEuMi0xLjItMS4ySDQ3djYuN0w0OC4yLDY2LjRMNDguMiw2Ni40eiIvPgo8cGF0aCBjbGFzcz0ic3QxIiBkPSJNNjIsNjUuM2MwLDAuOCwwLjMsMS4yLDEuMSwxLjJjMC44LDAsMS4xLTAuNSwxLjEtMS4ydi02LjRoMXY2LjRjMCwxLjMtMC43LDIuMS0yLjIsMi4xUzYxLDY2LjUsNjEsNjUuMnYtNi40CglINjJWNjUuM3oiLz4KPHBhdGggY2xhc3M9InN0MSIgZD0iTTgwLjIsNjAuOXYwLjhoLTF2LTAuOGMwLTAuOC0wLjMtMS4yLTEuMS0xLjJzLTEuMSwwLjUtMS4xLDEuMnY0LjRjMCwwLjgsMC40LDEuMiwxLjEsMS4yczEuMS0wLjUsMS4xLTEuMgoJdi0xLjFoMXYxYzAsMS4zLTAuNywyLjEtMi4yLDIuMWMtMS41LDAtMi4yLTAuOC0yLjItMi4xdi00LjNjMC0xLjMsMC43LTIuMSwyLjItMi4xQzc5LjUsNTguOCw4MC4yLDU5LjYsODAuMiw2MC45TDgwLjIsNjAuOXoiLz4KPHBhdGggY2xhc3M9InN0MSIgZD0iTTkxLjksNjUuNmwtMC40LDEuN2gtMWwxLjgtOC40aDEuNmwxLjgsOC40aC0xLjFsLTAuNC0xLjdIOTEuOUw5MS45LDY1LjZ6IE05Miw2NC44aDIuMWwtMS4xLTQuOEw5Miw2NC44CglMOTIsNjQuOHoiLz4KPHBhdGggY2xhc3M9InN0MSIgZD0iTTEwNy42LDY3LjN2LTcuNWgtMS44di0wLjloNC42djAuOWgtMS44djcuNUgxMDcuNkwxMDcuNiw2Ny4zeiIvPgo8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTIxLjksNTguOXY4LjRoLTEuMXYtOC40SDEyMS45eiIvPgo8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTMyLjYsNjAuOWMwLTEuMywwLjctMi4xLDIuMi0yLjFjMS41LDAsMi4yLDAuOCwyLjIsMi4xdjQuM2MwLDEuMy0wLjcsMi4xLTIuMiwyLjFjLTEuNSwwLTIuMi0wLjgtMi4yLTIuMQoJVjYwLjl6IE0xMzMuNiw2NS4zYzAsMC44LDAuNCwxLjIsMS4xLDEuMmMwLjgsMCwxLjEtMC40LDEuMS0xLjJ2LTQuNGMwLTAuOC0wLjQtMS4yLTEuMS0xLjJjLTAuOCwwLTEuMSwwLjUtMS4xLDEuMlY2NS4zeiIvPgo8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTQ4LjYsNjcuM2gtMXYtOC40aDEuNGwyLjIsNi4xdi02LjFoMXY4LjRIMTUxbC0yLjUtNi44VjY3LjNMMTQ4LjYsNjcuM3oiLz4KPHBhdGggY2xhc3M9InN0MSIgZD0iTTE3OC45LDYwLjl2MC43aC0xdi0wLjhjMC0wLjgtMC4zLTEuMi0xLjEtMS4yYy0wLjgsMC0xLjEsMC41LTEuMSwxLjJ2NC40YzAsMC44LDAuNCwxLjIsMS4xLDEuMgoJYzAuOCwwLDEuMS0wLjUsMS4xLTEuMnYtMS43aC0xdi0wLjhoMnYyLjVjMCwxLjMtMC43LDIuMS0yLjIsMi4xYy0xLjUsMC0yLjItMC44LTIuMi0yLjF2LTQuM2MwLTEuMywwLjctMi4xLDIuMi0yLjEKCUMxNzguMiw1OC44LDE3OC45LDU5LjYsMTc4LjksNjAuOUwxNzguOSw2MC45eiIvPgo8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTkxLjcsNTguOWMxLjUsMCwyLjEsMC43LDIuMSwxLjl2MC43YzAsMC45LTAuNCwxLjUtMS4yLDEuN2MwLjksMC4yLDEuMiwwLjksMS4yLDEuOHYxLjNjMCwwLjQsMCwwLjcsMC4yLDEKCWgtMS4xYy0wLjEtMC4yLTAuMi0wLjUtMC4yLTF2LTEuM2MwLTAuOS0wLjUtMS4yLTEuNC0xLjJoLTAuOHYzLjZoLTEuMXYtOC40SDE5MS43TDE5MS43LDU4Ljl6IE0xOTEuNCw2Mi44YzAuOSwwLDEuNC0wLjIsMS40LTEuMgoJdi0wLjhjMC0wLjgtMC4zLTEuMi0xLjEtMS4yaC0xdjMuMUwxOTEuNCw2Mi44TDE5MS40LDYyLjh6Ii8+CjxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik0yMDQuNSw2MC45YzAtMS4zLDAuNy0yLjEsMi4yLTIuMWMxLjUsMCwyLjIsMC44LDIuMiwyLjF2NC4zYzAsMS4zLTAuNywyLjEtMi4yLDIuMWMtMS41LDAtMi4yLTAuOC0yLjItMi4xCglWNjAuOXogTTIwNS42LDY1LjNjMCwwLjgsMC40LDEuMiwxLjEsMS4yYzAuOCwwLDEuMS0wLjQsMS4xLTEuMnYtNC40YzAtMC44LTAuNC0xLjItMS4xLTEuMmMtMC44LDAtMS4xLDAuNS0xLjEsMS4yVjY1LjN6Ii8+CjxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik0yMjAuNiw2NS4zYzAsMC44LDAuMywxLjIsMS4xLDEuMmMwLjgsMCwxLjEtMC41LDEuMS0xLjJ2LTYuNGgxdjYuNGMwLDEuMy0wLjcsMi4xLTIuMiwyLjEKCWMtMS41LDAtMi4xLTAuOS0yLjEtMi4xdi02LjRoMS4xVjY1LjN6Ii8+CjxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik0yMzYuNiw1OC45YzEuNSwwLDIuMiwwLjgsMi4yLDIuMXYxYzAsMS4zLTAuNywyLTIuMiwyaC0xdjMuM2gtMS4xdi04LjRIMjM2LjZMMjM2LjYsNTguOXogTTIzNi41LDYzLjEKCWMwLjgsMCwxLjItMC4zLDEuMi0xLjF2LTEuMWMwLTAuOC0wLjMtMS4yLTEuMS0xLjJoLTF2My40TDIzNi41LDYzLjFMMjM2LjUsNjMuMXoiLz4KPHBhdGggY2xhc3M9InN0MSIgZD0iTTE1My45LDMyLjVoLTkuOHYxOS44aC00LjlWMzIuNWgtOS44di00LjloMjQuNFYzMi41eiIvPgo8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTgyLjMsMzIuNWgtMjQuNHYtNC45aDI0LjRWMzIuNXogTTE4Mi4zLDQyLjRoLTI0LjR2LTQuOWgyNC40VjQyLjR6IE0xODIuMyw1Mi40aC0yNC40di00LjloMjQuNFY1Mi40eiIvPgo8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMjEwLjYsNTIuNGgtMjQuNFYyNy42aDI0LjR2NC45aC0xOS42djE0LjloMTkuNlY1Mi40eiIvPgo8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMjM5LDUyLjRoLTQuOXYtMTBoLTE0Ljd2MTBoLTQuOVYyNy42aDQuOXY5LjloMTQuN3YtOS45aDQuOVY1Mi40eiIvPgo8cGF0aCBjbGFzcz0ic3QwIiBkPSJNNDMsNDguOWMzLjksMCw1LjktMS4yLDYtMy40YzAtMS44LTEuMy0zLTMuOS0zLjNjLTEuMi0wLjEtMi42LTAuMy00LTAuNWMtMi42LTAuNC00LjYtMS4xLTUuOS0yLjQKCWMtMS40LTEuMy0yLjEtMi44LTIuMS00LjZjMC0yLjIsMC45LTMuOSwyLjYtNS4yYzEuNy0xLjMsNC4xLTIsNy4yLTJjMy44LDAuMSw3LDAuOSw5LjgsMi42bC0yLjYsMy4xYy0yLjMtMS4yLTQuOC0xLjktNy41LTEuOQoJYy0xLjQsMC0yLjYsMC4zLTMuNSwwLjljLTEsMC42LTEuNSwxLjUtMS41LDIuN2MwLDAuNywwLjMsMS40LDEsMS45YzAuNywwLjYsMS44LDEsMy4zLDEuMmMwLjgsMC4xLDIsMC4yLDMuNCwwLjQKCWMyLjgsMC4zLDQuOSwxLjEsNi4zLDIuNWMxLjMsMS4zLDIsMi45LDIsNC42Yy0wLjIsNC43LTMuNyw3LjEtMTAuNiw3LjJjLTQuNSwwLTguMy0xLjEtMTEuNi0zLjRsMy0yLjgKCUMzNi44LDQ4LjEsMzkuNiw0OC45LDQzLDQ4LjlMNDMsNDguOXoiLz4KPHBhdGggY2xhc3M9InN0MCIgZD0iTTU4LjIsMjkuNWg0LjN2NS40aDMuMnYyLjdoLTMuMnYxMC4zYzAsMC45LDAuNSwxLjMsMS41LDEuM2gxLjZ2My4zaC0yLjNjLTEuNSwwLTIuOC0wLjQtMy43LTEuMgoJYy0xLTAuNy0xLjUtMS44LTEuNS0zLjJWMzcuNWgtMi4ydi0yLjdoMi4yVjI5LjVMNTguMiwyOS41eiIvPgo8cGF0aCBjbGFzcz0ic3QwIiBkPSJNNjkuOCwzNC44aDQuM3YxLjloMC4xYzEuNC0xLjQsMy4zLTIuMSw1LjYtMi4xYzEuNywwLDMuMiwwLjUsNC41LDEuNGwtMy4yLDMuMWMtMC45LTAuNi0xLjktMC45LTIuOC0wLjkKCWMtMS4xLDAtMi4xLDAuMy0yLjgsMC45Yy0wLjksMC42LTEuMywxLjUtMS40LDIuOHYxMC42aC00LjNWMzQuOEw2OS44LDM0Ljh6Ii8+CjxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik05Ni44LDUwLjlMOTYuOCw1MC45Yy0wLjUsMC42LTEuMSwxLTIsMS4zYy0wLjgsMC4zLTIsMC40LTMuNCwwLjRjLTIuNCwwLTQuMy0wLjUtNS42LTEuNgoJYy0xLjQtMS0yLjEtMi4zLTIuMS0zLjhjMC0xLjYsMC42LTIuNywxLjgtMy43YzEuMi0xLDIuOS0xLjUsNS4yLTEuNWg2di0xLjhjMC0xLjYtMS40LTIuMy00LjQtMi4zYy0xLjEsMC0xLjksMC4xLTIuNiwwLjMKCWMtMC42LDAuMi0xLjIsMC42LTEuNSwxLjFsLTMuNC0yLjFjMS42LTEuOCw0LjEtMi42LDcuMy0yLjZjMi43LDAsNC45LDAuNCw2LjUsMS4zYzEuNiwwLjksMi40LDIuNCwyLjUsNC41djEyaC00LjNMOTYuOCw1MC45CglMOTYuOCw1MC45eiBNOTYuOCw0NWgtNS4yYy0yLjUsMC0zLjgsMC44LTMuNywyLjFjMCwwLjYsMC4zLDEuMSwxLDEuNWMwLjYsMC41LDEuNywwLjcsMy4xLDAuN2MxLjgsMCwzLjEtMC4yLDMuOC0wLjUKCWMwLjctMC40LDEtMS4yLDEtMi41TDk2LjgsNDVMOTYuOCw0NXoiLz4KPHBhdGggY2xhc3M9InN0MCIgZD0iTTEwNywyOS41aDQuM3Y1LjRoMy4ydjIuN2gtMy4ydjEwLjNjMCwwLjksMC41LDEuMywxLjUsMS4zaDEuNnYzLjNoLTIuM2MtMS41LDAtMi44LTAuNC0zLjctMS4yCgljLTEtMC43LTEuNS0xLjgtMS41LTMuMlYzNy41aC0yLjJ2LTIuN2gyLjJWMjkuNUwxMDcsMjkuNXoiLz4KPHBhdGggY2xhc3M9InN0MCIgZD0iTTEyOS45LDUwLjlMMTI5LjksNTAuOWMtMC41LDAuNi0xLjEsMS0yLDEuM2MtMC44LDAuMy0yLDAuNC0zLjQsMC40Yy0yLjQsMC00LjMtMC41LTUuNi0xLjYKCWMtMS40LTEtMi4xLTIuMy0yLjEtMy44YzAtMS42LDAuNi0yLjcsMS44LTMuN2MxLjItMSwyLjktMS41LDUuMi0xLjVoNnYtMS44YzAtMS42LTEuNC0yLjMtNC40LTIuM2MtMS4xLDAtMS45LDAuMS0yLjYsMC4zCgljLTAuNywwLjItMS4yLDAuNi0xLjUsMS4xbC0zLjQtMi4xYzEuNi0xLjgsNC4xLTIuNiw3LjMtMi42YzIuNywwLDQuOSwwLjQsNi41LDEuM2MxLjYsMC45LDIuNCwyLjQsMi41LDQuNXYxMmgtNC4zTDEyOS45LDUwLjkKCUwxMjkuOSw1MC45eiBNMTI5LjksNDVoLTUuMmMtMi41LDAtMy44LDAuOC0zLjcsMi4xYzAsMC42LDAuMywxLjEsMSwxLjVjMC42LDAuNSwxLjcsMC43LDMuMSwwLjdjMS44LDAsMy4xLTAuMiwzLjgtMC41CgljMC43LTAuNCwxLTEuMiwxLTIuNUwxMjkuOSw0NUwxMjkuOSw0NXoiLz4KPC9zdmc+Cg==" alt="Stratatech">
   </div>
 </div>
 
-<!-- Screen Pop -->
-<div class="screen-pop">
+<div class="student-bar">
+  <div class="student-bar-label">Student Info</div>
   <div class="pop-fields">
-    <div class="pop-field">
-      <div class="pop-field-label">Student</div>
-      <div class="pop-field-value">Alex Rivera</div>
-    </div>
-    <div class="pop-field">
-      <div class="pop-field-label">Phone</div>
-      <div class="pop-field-value">(720) 555-0142</div>
-    </div>
-    <div class="pop-field">
-      <div class="pop-field-label">Email</div>
-      <div class="pop-field-value">alex.r@email.com</div>
-    </div>
-    <div class="pop-field">
-      <div class="pop-field-label">Program Interest</div>
-      <div class="pop-field-value highlight">Welding Technology</div>
-    </div>
-    <div class="pop-field">
-      <div class="pop-field-label">Contact Pref.</div>
-      <div class="pop-field-value">Phone</div>
-    </div>
-    <div class="pop-field">
-      <div class="pop-field-label">Location</div>
-      <div class="pop-field-value">Denver, CO</div>
-    </div>
+    <div class="pop-field"><div class="pop-field-label">Student</div><div class="pop-field-value">Alex Rivera</div></div>
+    <div class="pop-field"><div class="pop-field-label">Phone</div><div class="pop-field-value">(720) 555-0142</div></div>
+    <div class="pop-field"><div class="pop-field-label">Email</div><div class="pop-field-value">alex.r@email.com</div></div>
+    <div class="pop-field"><div class="pop-field-label">Program Interest</div><div class="pop-field-value highlight">Welding Technology</div></div>
+    <div class="pop-field"><div class="pop-field-label">Contact Pref.</div><div class="pop-field-value">Phone</div></div>
+    <div class="pop-field"><div class="pop-field-label">Location</div><div class="pop-field-value">Denver, CO</div></div>
   </div>
 </div>
 
@@ -756,112 +604,48 @@
   <button class="tab-btn" onclick="switchTab(5)"><span class="tab-num">6</span> Wrap-Up</button>
 </div>
 
-<div class="content">
+<div class="progress-wrap">
+  <div class="progress-bar" id="progressBar" style="width:16%"></div>
+</div>
 
-  <div class="progress-wrap">
-    <div class="progress-bar" id="progressBar" style="width:16%"></div>
-  </div>
+<div class="content">
 
   <!-- TAB 1: WARM HANDOFF -->
   <div class="tab-panel active" id="tab-0">
-
     <div class="section">
       <div class="section-label">Opening — You Already Know Who This Is</div>
-      <div class="alert">
-        <span class="alert-icon">💡</span>
-        The student already spoke with our virtual assistant. They gave their info and chose to connect with you. Lead with their name and show them they don't have to start over.
-      </div>
-      <div class="script-box">
-        <span class="script-tag">Say</span>
-        "Hi <em>[First Name]</em>, this is <em>[Your Name]</em> with Stratatech — thanks for holding while I got connected. I can see you've been looking into our <em>[Program]</em> program, and I wanted to personally walk you through everything and answer any questions you have. Is now still a good time?"
-      </div>
-      <div class="script-box alt">
-        <span class="script-tag alt">If They Seem Rushed</span>
-        "I know your time is valuable — I'll keep this focused. I just want to make sure you get the full picture on <em>[Program]</em> and we figure out the best next step for you."
-      </div>
-      <div class="script-box tip">
-        <span class="script-tag tip">Advisor Tip</span>
-        Using their name immediately signals they aren't starting from scratch. Warm, unhurried tone — they already showed intent by staying on the line through the virtual agent.
-      </div>
+      <div class="alert"><span class="alert-icon">💡</span>The student already spoke with our virtual assistant. They gave their info and chose to connect with you. Lead with their name and show them they don't have to start over.</div>
+      <div class="script-box"><span class="script-tag">Say</span>"Hi <em>[First Name]</em>, this is <em>[Your Name]</em> with Stratatech — thanks for holding while I got connected. I can see you've been looking into our <em>[Program]</em> program, and I wanted to personally walk you through everything and answer any questions you have. Is now still a good time?"</div>
+      <div class="script-box alt"><span class="script-tag alt">If They Seem Rushed</span>"I know your time is valuable — I'll keep this focused. I just want to make sure you get the full picture on <em>[Program]</em> and we figure out the best next step for you."</div>
+      <div class="script-box tip"><span class="script-tag tip">Advisor Tip</span>Using their name immediately signals they aren't starting from scratch. Warm, unhurried tone — they already showed intent by staying on the line through the virtual agent.</div>
     </div>
-
     <div class="section">
       <div class="section-label">Bridge to the Conversation</div>
-      <div class="script-box">
-        <span class="script-tag">Say</span>
-        "So you mentioned you're interested in <em>[Program]</em> and you're in the <em>[Location]</em> area — I'd love to learn a little more about where you're coming from so I can make sure this is the right fit. Mind if I ask you a few quick questions?"
-      </div>
+      <div class="script-box"><span class="script-tag">Say</span>"So you mentioned you're interested in <em>[Program]</em> and you're in the <em>[Location]</em> area — I'd love to learn a little more about where you're coming from so I can make sure this is the right fit. Mind if I ask you a few quick questions?"</div>
     </div>
-
     <button class="cta-btn" onclick="switchTab(1)">Next: Confirm Info →</button>
   </div>
 
   <!-- TAB 2: CONFIRM INFO -->
   <div class="tab-panel" id="tab-1">
-
     <div class="section">
       <div class="section-label">Confirm What the Virtual Agent Collected</div>
-      <div class="script-box">
-        <span class="script-tag">Say</span>
-        "Before we dive in, let me just quickly confirm what I have for you — I want to make sure everything's accurate."
-      </div>
+      <div class="script-box"><span class="script-tag">Say</span>"Before we dive in, let me just quickly confirm what I have for you — I want to make sure everything's accurate."</div>
     </div>
-
     <div class="section">
       <div class="section-label">Student Record — Editable</div>
       <div class="confirm-box">
-        <div class="confirm-row">
-          <div class="confirm-key">First Name</div>
-          <input class="confirm-val editable" type="text" value="Alex">
-        </div>
-        <div class="confirm-row">
-          <div class="confirm-key">Last Name</div>
-          <input class="confirm-val editable" type="text" value="Rivera">
-        </div>
-        <div class="confirm-row">
-          <div class="confirm-key">Email</div>
-          <input class="confirm-val editable" type="email" value="alex.r@email.com">
-        </div>
-        <div class="confirm-row">
-          <div class="confirm-key">Phone</div>
-          <input class="confirm-val editable" type="tel" value="(720) 555-0142">
-        </div>
-        <div class="confirm-row">
-          <div class="confirm-key">Best Way to Contact</div>
-          <select class="confirm-val editable" style="padding:0 4px;">
-            <option>Phone</option>
-            <option>Email</option>
-            <option>Text</option>
-          </select>
-        </div>
-        <div class="confirm-row">
-          <div class="confirm-key">Program Interest</div>
-          <select class="confirm-val editable" style="padding:0 4px;">
-            <option>Welding Technology</option>
-            <option>HVAC/R Technology</option>
-            <option>Electrical Technology</option>
-            <option>IT Support & Networking</option>
-            <option>Cybersecurity Fundamentals</option>
-            <option>Automotive Technology</option>
-            <option>Undecided</option>
-          </select>
-        </div>
-        <div class="confirm-row">
-          <div class="confirm-key">Location</div>
-          <input class="confirm-val editable" type="text" value="Denver, CO">
-        </div>
+        <div class="confirm-row"><div class="confirm-key">First Name</div><input class="confirm-val editable" type="text" value="Alex"></div>
+        <div class="confirm-row"><div class="confirm-key">Last Name</div><input class="confirm-val editable" type="text" value="Rivera"></div>
+        <div class="confirm-row"><div class="confirm-key">Email</div><input class="confirm-val editable" type="email" value="alex.r@email.com"></div>
+        <div class="confirm-row"><div class="confirm-key">Phone</div><input class="confirm-val editable" type="tel" value="(720) 555-0142"></div>
+        <div class="confirm-row"><div class="confirm-key">Best Way to Contact</div><select class="confirm-val editable" style="padding:0 4px;"><option>Phone</option><option>Email</option><option>Text</option></select></div>
+        <div class="confirm-row"><div class="confirm-key">Program Interest</div><select class="confirm-val editable" style="padding:0 4px;"><option>Welding Technology</option><option>HVAC/R Technology</option><option>Electrical Technology</option><option>IT Support & Networking</option><option>Cybersecurity Fundamentals</option><option>Automotive Technology</option><option>Undecided</option></select></div>
+        <div class="confirm-row"><div class="confirm-key">Location</div><input class="confirm-val editable" type="text" value="Denver, CO"></div>
       </div>
-
-      <div class="script-box">
-        <span class="script-tag">Say</span>
-        "Does all of that look right? And just to confirm — <em>[Program]</em> is the area you're most interested in, or are you still exploring a few options?"
-      </div>
-      <div class="script-box tip">
-        <span class="script-tag tip">Advisor Tip</span>
-        Correct any errors here live. If they mention a different program, update the record and pivot your talking points accordingly on the next tab.
-      </div>
+      <div class="script-box"><span class="script-tag">Say</span>"Does all of that look right? And just to confirm — <em>[Program]</em> is the area you're most interested in, or are you still exploring a few options?"</div>
+      <div class="script-box tip"><span class="script-tag tip">Advisor Tip</span>Correct any errors here live. If they mention a different program, update the record and pivot your talking points on the next tab.</div>
     </div>
-
     <div style="display:flex; gap:10px;">
       <button class="cta-btn secondary" onclick="switchTab(0)">← Back</button>
       <button class="cta-btn" onclick="switchTab(2)">Next: Go Deeper →</button>
@@ -870,347 +654,15 @@
 
   <!-- TAB 3: GO DEEPER -->
   <div class="tab-panel" id="tab-2">
-
     <div class="section">
       <div class="section-label">Deepen the Conversation</div>
-      <div class="script-box">
-        <span class="script-tag">Say</span>
-        "I want to make sure this program is genuinely the right fit for you — not just right now, but for where you want to be in a few years. So I'd love to ask a few more questions if that's okay."
-      </div>
+      <div class="script-box"><span class="script-tag">Say</span>"I want to make sure this program is genuinely the right fit for you — not just right now, but for where you want to be in a few years. So I'd love to ask a few more questions if that's okay."</div>
     </div>
-
     <div class="section">
       <div class="section-label">Click a Question to See the Why Behind It</div>
-
-      <div class="depth-item">
-        <div class="depth-q" onclick="toggleDepth(this)">
-          <span>"What's going on for you right now that made you reach out today?"</span>
-          <span class="depth-purpose">Motivation</span>
-          <span class="depth-chevron">▼</span>
-        </div>
-        <div class="depth-note">This surfaces urgency and emotional driver. Are they unemployed, underpaid, career-switching, or just curious? Their answer shapes everything else.</div>
-      </div>
-
-      <div class="depth-item">
-        <div class="depth-q" onclick="toggleDepth(this)">
-          <span>"Have you looked into any other programs or schools before calling us?"</span>
-          <span class="depth-purpose">Competitive</span>
-          <span class="depth-chevron">▼</span>
-        </div>
-        <div class="depth-note">Tells you if they're actively comparing options. If yes, you can differentiate on placement rate, program length, and certifications. If no, they're early in the process.</div>
-      </div>
-
-      <div class="depth-item">
-        <div class="depth-q" onclick="toggleDepth(this)">
-          <span>"What does a successful outcome look like for you — what are you hoping your life looks like after you complete the program?"</span>
-          <span class="depth-purpose">Vision</span>
-          <span class="depth-chevron">▼</span>
-        </div>
-        <div class="depth-note">Gets them talking about their future, not just their situation. Helps you connect the program to their actual goal — whether that's income, independence, stability, or something else.</div>
-      </div>
-
-      <div class="depth-item">
-        <div class="depth-q" onclick="toggleDepth(this)">
-          <span>"Do you have any flexibility in your schedule right now, or are you working around a job or family commitments?"</span>
-          <span class="depth-purpose">Logistics</span>
-          <span class="depth-chevron">▼</span>
-        </div>
-        <div class="depth-note">Surfaces schedule constraints early. If they're working full-time or have kids, you can talk about part-time options before they bring it up as an objection.</div>
-      </div>
-
-      <div class="depth-item">
-        <div class="depth-q" onclick="toggleDepth(this)">
-          <span>"Is cost something that's on your mind, or have you thought about how you'd fund the program?"</span>
-          <span class="depth-purpose">Financial</span>
-          <span class="depth-chevron">▼</span>
-        </div>
-        <div class="depth-note">Opens the financial aid door without pressure. If they haven't thought about it, it's a value-add to walk them through options. If they have concerns, better to address them now.</div>
-      </div>
-
-      <div class="depth-item">
-        <div class="depth-q" onclick="toggleDepth(this)">
-          <span>"Is there anything holding you back from moving forward — or does this feel like the right direction?"</span>
-          <span class="depth-purpose">Readiness</span>
-          <span class="depth-chevron">▼</span>
-        </div>
-        <div class="depth-note">A soft close that also surfaces hidden objections. If they hesitate, you learn what needs to be addressed. If they're ready, this leads naturally into scheduling the visit.</div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-label">Conversation Notes</div>
-      <textarea class="notes-area" placeholder="Key points, motivations, concerns, goals mentioned..."></textarea>
-    </div>
-
-    <div style="display:flex; gap:10px;">
-      <button class="cta-btn secondary" onclick="switchTab(1)">← Back</button>
-      <button class="cta-btn" onclick="switchTab(3)">Next: Veteran Status →</button>
-    </div>
-  </div>
-
-  <!-- TAB 4: VETERAN STATUS -->
-  <div class="tab-panel" id="tab-3">
-
-    <div class="section">
-      <div class="section-label veteran">Veteran & Military Status</div>
-
-      <div class="script-box veteran">
-        <span class="script-tag veteran">Ask — Natural Transition</span>
-        "One thing I always like to ask — have you served in the military, or are you currently active duty or in the reserves?"
-      </div>
-      <div class="script-box tip">
-        <span class="script-tag tip">Advisor Tip</span>
-        Ask this conversationally, not as a form field. If they say yes, flip the toggle below to see the VA benefits talking points. If no, move straight to scheduling.
-      </div>
-    </div>
-
-    <div class="toggle-row">
-      <span class="toggle-label">🎖️ Student is a Veteran or Active Duty</span>
-      <label class="toggle">
-        <input type="checkbox" id="veteranToggle" onchange="toggleVeteran()">
-        <span class="toggle-slider"></span>
-      </label>
-    </div>
-
-    <!-- Non-veteran path -->
-    <div id="nonVeteranPath">
-      <div class="script-box alt">
-        <span class="script-tag alt">If Not a Veteran</span>
-        "No problem at all — we have financial aid and payment plan options that work for a lot of students. We can walk through all of that when you come in. Let's get you scheduled for a visit."
-      </div>
-    </div>
-
-    <!-- Veteran path -->
-    <div class="veteran-section" id="veteranPath">
-
-      <div class="veteran-banner">
-        <div class="veteran-icon">🎖️</div>
-        <div class="veteran-banner-text">
-          <h4>Veteran Benefits Path Active</h4>
-          <p>Stratatech is approved for VA education benefits. Walk through the key points below and make sure veteran benefits are flagged in the student's record before scheduling.</p>
-        </div>
-      </div>
-
-      <div class="section">
-        <div class="section-label veteran">VA Benefits Conversation</div>
-
-        <div class="script-box veteran">
-          <span class="script-tag veteran">Say</span>
-          "First, thank you for your service. The good news is Stratatech is approved to accept VA education benefits — so depending on what you're eligible for, your training could be fully covered or significantly reduced in cost."
-        </div>
-
-        <div class="script-box veteran">
-          <span class="script-tag veteran">Ask</span>
-          "Do you know which GI Bill benefit you have — is it the Post-9/11 GI Bill, the Montgomery GI Bill, or something else? Or have you had a chance to check your eligibility yet?"
-        </div>
-
-        <div class="script-box tip">
-          <span class="script-tag tip">Advisor Tip</span>
-          Many veterans don't know which chapter they have or whether they've used any entitlement. Don't assume — ask. If they're unsure, direct them to VA.gov or our veterans services coordinator.
-        </div>
-      </div>
-
-      <div class="section">
-        <div class="section-label veteran">Key Benefits Reference</div>
-        <div class="card-grid">
-          <div class="info-card">
-            <div class="info-card-title">Post-9/11 (Ch. 33)</div>
-            <div class="info-card-body">Covers tuition, housing allowance (BAH), and a book stipend. Most comprehensive benefit.</div>
-          </div>
-          <div class="info-card">
-            <div class="info-card-title">Montgomery (Ch. 30)</div>
-            <div class="info-card-body">Monthly stipend paid to student. Student pays tuition first, then receives payment.</div>
-          </div>
-          <div class="info-card">
-            <div class="info-card-title">VR&E (Ch. 31)</div>
-            <div class="info-card-body">For service-connected disabilities. Can cover full training costs plus living expenses.</div>
-          </div>
-          <div class="info-card">
-            <div class="info-card-title">MyCAA</div>
-            <div class="info-card-body">For military spouses. Up to $4,000 for career training programs.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="section">
-        <div class="section-label veteran">Additional Talking Points</div>
-        <div class="script-box veteran">
-          <span class="script-tag veteran">Say</span>
-          "We have a dedicated veterans services coordinator on campus who works with students on the paperwork and makes sure your benefits are applied correctly from day one. You won't be navigating that alone."
-        </div>
-        <div class="script-box veteran">
-          <span class="script-tag veteran">Say</span>
-          "A lot of our veteran students find that their military training actually lines up really well with our programs — especially in <em>[Welding / Electrical / Auto Tech]</em>. That background gives you a real head start."
-        </div>
-      </div>
-
-      <div class="section">
-        <div class="section-label veteran">Veteran Checklist</div>
-        <ul class="checklist">
-          <li>
-            <div class="check-box" onclick="toggleCheck(this)"></div>
-            <span class="check-label">Veteran status flagged in student record</span>
-          </li>
-          <li>
-            <div class="check-box" onclick="toggleCheck(this)"></div>
-            <span class="check-label">GI Bill chapter identified (or unknown — follow up)</span>
-          </li>
-          <li>
-            <div class="check-box" onclick="toggleCheck(this)"></div>
-            <span class="check-label">Veterans services coordinator referral made or scheduled</span>
-          </li>
-          <li>
-            <div class="check-box" onclick="toggleCheck(this)"></div>
-            <span class="check-label">Benefits eligibility / remaining entitlement discussed</span>
-          </li>
-        </ul>
-      </div>
-
-    </div>
-
-    <div style="display:flex; gap:10px;">
-      <button class="cta-btn secondary" onclick="switchTab(2)">← Back</button>
-      <button class="cta-btn" onclick="switchTab(4)">Next: Schedule Visit →</button>
-    </div>
-  </div>
-
-  <!-- TAB 5: SCHEDULE VISIT -->
-  <div class="tab-panel" id="tab-4">
-
-    <div class="section">
-      <div class="section-label">The Ask</div>
-      <div class="script-box visit">
-        <span class="script-tag visit">Say</span>
-        "Based on everything you've shared, I think the best next step is to get you on campus so you can see the facilities, meet some of the instructors, and really get a feel for whether this is the right place for you. We do campus visits most weekdays and some Saturdays — what does your schedule look like in the next week or two?"
-      </div>
-      <div class="script-box alt">
-        <span class="script-tag alt">If They Hesitate</span>
-        "There's absolutely no commitment involved — it's just a tour and a conversation. A lot of students tell us the visit was what made it click for them. We can do it in under an hour."
-      </div>
-      <div class="script-box tip">
-        <span class="script-tag tip">Advisor Tip</span>
-        Give them two specific options rather than an open-ended "when works for you." For example: "Would a Tuesday morning or a Thursday afternoon work better?" Choice framing makes it easier to commit.
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-label">Visit Scheduling</div>
-      <div class="visit-card">
-        <div class="visit-card-title">📅 Campus Visit Details</div>
-        <div class="row">
-          <div class="col">
-            <span class="mini-label">Preferred Date</span>
-            <input type="date" class="field-input">
-          </div>
-          <div class="col">
-            <span class="mini-label">Preferred Time</span>
-            <select class="field-input">
-              <option value="">Select...</option>
-              <option>Morning (9:00 AM – 12:00 PM)</option>
-              <option>Afternoon (12:00 PM – 3:00 PM)</option>
-              <option>Late Afternoon (3:00 PM – 5:00 PM)</option>
-              <option>Saturday Morning</option>
-            </select>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <span class="mini-label">Campus Location</span>
-            <select class="field-input">
-              <option value="">Select campus...</option>
-              <option>Denver Main Campus</option>
-              <option>Aurora Campus</option>
-              <option>Colorado Springs Campus</option>
-              <option>Fort Collins Campus</option>
-            </select>
-          </div>
-          <div class="col">
-            <span class="mini-label">Visit Type</span>
-            <select class="field-input">
-              <option>In-Person Campus Tour</option>
-              <option>Virtual Tour (Video Call)</option>
-              <option>Open House Event</option>
-            </select>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <span class="mini-label">Bringing Anyone? (Family, Spouse)</span>
-            <input type="text" class="field-input" placeholder="e.g. spouse, parent">
-          </div>
-          <div class="col">
-            <span class="mini-label">Backup Date (Optional)</span>
-            <input type="date" class="field-input">
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-label">Confirmation Script</div>
-      <div class="script-box visit">
-        <span class="script-tag visit">Say</span>
-        "Perfect — I've got you down for <em>[Date]</em> at <em>[Time]</em> at our <em>[Campus]</em> campus. You'll get a confirmation email at <em>[Email]</em> with the address and what to expect. Plan for about an hour — we'll do a tour, I'll introduce you to one of our program instructors, and we can go over your financial options while you're here."
-      </div>
-      <div class="script-box alt">
-        <span class="script-tag alt">If They Can't Commit to a Date</span>
-        "No problem — I'll send you our visit page with available times so you can pick when it works for you. And feel free to call back or text us — whatever's easiest for you."
-      </div>
-    </div>
-
-    <div style="display:flex; gap:10px;">
-      <button class="cta-btn secondary" onclick="switchTab(3)">← Back</button>
-      <button class="cta-btn" onclick="switchTab(5)">Next: Wrap-Up →</button>
-    </div>
-  </div>
-
-  <!-- TAB 6: WRAP-UP -->
-  <div class="tab-panel" id="tab-5">
-
-    <div class="section">
-      <div class="section-label">Closing the Call</div>
-      <div class="script-box">
-        <span class="script-tag">Say — Visit Scheduled</span>
-        "It was really great talking with you, <em>[First Name]</em>. You're going to get that confirmation shortly, and I'll personally be reaching out before your visit just to make sure everything's set. If you think of any questions before then, don't hesitate to call or text — my direct info will be in that email. We'll see you <em>[Day]</em>!"
-      </div>
-      <div class="script-box alt">
-        <span class="script-tag alt">Say — No Visit Scheduled</span>
-        "I really appreciate you taking the time to talk today. I'm going to send over our program overview and some information about financial aid so you have everything you need. There's no rush — we're here whenever you're ready to take the next step."
-      </div>
-      <div class="script-box">
-        <span class="script-tag">Always End With</span>
-        "Thanks again, <em>[First Name]</em>. Have a great <em>[morning / afternoon / evening]</em>!"
-      </div>
-    </div>
-
-    <button class="cta-btn secondary" onclick="switchTab(4)">← Back</button>
-
-  </div>
-
-</div>
-
-<script>
-  function switchTab(index) {
-    document.querySelectorAll('.tab-btn').forEach((t, i) => t.classList.toggle('active', i === index));
-    document.querySelectorAll('.tab-panel').forEach((p, i) => p.classList.toggle('active', i === index));
-    document.getElementById('progressBar').style.width = ((index + 1) / 6 * 100) + '%';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  function toggleDepth(el) {
-    el.closest('.depth-item').classList.toggle('open');
-  }
-
-  function toggleCheck(box) {
-    box.classList.toggle('checked');
-    box.nextElementSibling.classList.toggle('checked');
-  }
-
-  function toggleVeteran() {
-    const isVet = document.getElementById('veteranToggle').checked;
-    document.getElementById('veteranPath').classList.toggle('visible', isVet);
-    document.getElementById('nonVeteranPath').style.display = isVet ? 'none' : 'block';
-  }
-</script>
-</body>
-</html>
+      <div class="depth-item"><div class="depth-q" onclick="toggleDepth(this)"><span>"What's going on for you right now that made you reach out today?"</span><span class="depth-purpose">Motivation</span><span class="depth-chevron">▼</span></div><div class="depth-note">Surfaces urgency and emotional driver. Are they unemployed, underpaid, career-switching, or just curious? Their answer shapes everything else.</div></div>
+      <div class="depth-item"><div class="depth-q" onclick="toggleDepth(this)"><span>"Have you looked into any other programs or schools before calling us?"</span><span class="depth-purpose">Competitive</span><span class="depth-chevron">▼</span></div><div class="depth-note">Tells you if they're actively comparing options. If yes, differentiate on placement rate, program length, and certifications. If no, they're early in the process.</div></div>
+      <div class="depth-item"><div class="depth-q" onclick="toggleDepth(this)"><span>"What does a successful outcome look like for you — what are you hoping your life looks like after you complete the program?"</span><span class="depth-purpose">Vision</span><span class="depth-chevron">▼</span></div><div class="depth-note">Gets them talking about their future, not just their situation. Helps you connect the program to their actual goal — income, independence, stability, or something else.</div></div>
+      <div class="depth-item"><div class="depth-q" onclick="toggleDepth(this)"><span>"Do you have any flexibility in your schedule right now, or are you working around a job or family commitments?"</span><span class="depth-purpose">Logistics</span><span class="depth-chevron">▼</span></div><div class="depth-note">Surfaces schedule constraints early. If they're working full-time or have kids, you can talk about part-time options before they bring it up as an objection.</div></div>
+      <div class="depth-item"><div class="depth-q" onclick="toggleDepth(this)"><span>"Is cost something that's on your mind, or have you thought about how you'd fund the program?"</span><span class="depth-purpose">Financial</span><span class="depth-chevron">▼</span></div><div class="depth-note">Opens the financial aid door without pressure. If they haven't thought about it, it's a value-add to walk them through options. If they have concerns, better to address them now.</div></div>
+      <div class="depth-item"><div class="depth-q" onclick="toggleDepth(this)"><span>"Is there anything holding you back from moving forward — or does this feel like the right direction?"</span><span class="depth-purpose">Readiness</span><span class="depth-chevron">▼</span></div><div class="depth-note">A soft close that also surfaces hidden objections. If they hesitate, you learn
